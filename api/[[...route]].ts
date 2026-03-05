@@ -7,21 +7,32 @@ import { Hero, About, Phase, Role, Highlight, CTA, Carousel, Testimonial, Bootca
 
 dotenv.config();
 
-const dnsServers = (process.env.DNS_SERVERS || "8.8.8.8,1.1.1.1")
+const dnsServers = (process.env.DNS_SERVERS || "")
   .split(",")
   .map((s) => s.trim())
   .filter(Boolean);
-if (dnsServers.length > 0) dns.setServers(dnsServers);
+if (dnsServers.length > 0) {
+  try {
+    dns.setServers(dnsServers);
+  } catch (err) {
+    console.error("Invalid DNS_SERVERS value:", err);
+  }
+}
 
 const adminPassword = process.env.ADMIN_PASSWORD || "";
 const mongoUri = process.env.MONGO_URI;
+let lastMongoError: string | null = null;
 
 let mongoConnectionPromise: Promise<typeof mongoose> | null = null;
 const ensureDbConnection = async () => {
   if (!mongoUri || mongoUri === "mongodb+srv://...") return;
   if (mongoose.connection.readyState === 1) return;
   if (!mongoConnectionPromise) {
-    mongoConnectionPromise = mongoose.connect(mongoUri).catch((err) => {
+    mongoConnectionPromise = mongoose.connect(mongoUri).then((conn) => {
+      lastMongoError = null;
+      return conn;
+    }).catch((err) => {
+      lastMongoError = err instanceof Error ? err.message : String(err);
       mongoConnectionPromise = null;
       throw err;
     });
@@ -120,7 +131,11 @@ app.get("/api/admin/verify", requireAdmin, (_req, res) => {
 });
 
 app.get("/api/admin/status", requireAdmin, (_req, res) => {
-  res.json({ dbConnected: isDbConnected() });
+  res.json({
+    dbConnected: isDbConnected(),
+    mongoUriConfigured: Boolean(mongoUri),
+    lastMongoError,
+  });
 });
 
 app.use("/api", (req, res, next) => {

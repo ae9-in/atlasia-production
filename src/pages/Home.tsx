@@ -24,7 +24,7 @@ const fallbackHighlights: HighlightData[] = [
 ];
 
 const fallbackCarousel: CarouselData[] = [
-  { _id: 'c1', imageUrl: 'https://picsum.photos/seed/atlasia1/1200/600', title: 'Immersive Learning', description: 'Experience the corporate world first-hand.' },
+  { _id: 'c1', imageUrl: 'https://res.cloudinary.com/dt7hm4udv/image/upload/WhatsApp_Image_2026-03-04_at_3.17.00_PM_1_ygcjt2.jpg', title: 'Immersive Learning', description: 'Experience the corporate world first-hand.' },
   { _id: 'c2', imageUrl: 'https://picsum.photos/seed/atlasia2/1200/600', title: 'Expert Guidance', description: 'Mentorship from industry veterans.' },
   { _id: 'c3', imageUrl: 'https://picsum.photos/seed/atlasia3/1200/600', title: 'Career Growth', description: 'Accelerate your professional journey.' },
 ];

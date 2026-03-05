@@ -28,10 +28,22 @@ function normalizeApiBaseUrl(raw: string): string {
 
 const normalizedApiBaseUrl = normalizeApiBaseUrl(configuredApiBaseUrl);
 const normalizedApiFallbackUrl = normalizeApiBaseUrl(configuredApiFallbackUrl);
+const localhostApiFallback = typeof window !== 'undefined' && /^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname)
+  ? `http://${window.location.hostname}:3000/api`
+  : '';
 
 const api = axios.create({
   baseURL: normalizedApiBaseUrl,
 });
+
+const apiBaseCandidates = Array.from(new Set(
+  [
+    normalizedApiBaseUrl,
+    '/api',
+    localhostApiFallback,
+    normalizedApiFallbackUrl,
+  ].filter(Boolean),
+));
 
 api.interceptors.response.use(
   (response) => response,
@@ -39,27 +51,19 @@ api.interceptors.response.use(
     if (!axios.isAxiosError(error) || !error.config) throw error;
 
     const status = error.response?.status;
-    const originalConfig = error.config as typeof error.config & { __apiRetryPhase?: number };
+    const originalConfig = error.config as typeof error.config & { __apiRetryIndex?: number };
     const originalUrl = originalConfig.url || '';
-    const isRetriableStatus = status === 404 || status === 405;
-    const phase = originalConfig.__apiRetryPhase || 0;
+    const isRetriableStatus = status === 404 || status === 405 || typeof status === 'undefined';
+    const retryIndex = originalConfig.__apiRetryIndex || 0;
     const isRelativeUrl = typeof originalUrl === 'string' && originalUrl.startsWith('/');
 
     if (!isRetriableStatus || !isRelativeUrl) throw error;
+    if (retryIndex >= apiBaseCandidates.length - 1) throw error;
 
-    if (phase === 0 && !originalUrl.startsWith('/api/')) {
-      originalConfig.__apiRetryPhase = 1;
-      originalConfig.url = `/api${originalUrl}`;
-      originalConfig.baseURL = '';
-      return api.request(originalConfig);
-    }
-
-    if (phase <= 1 && normalizedApiFallbackUrl !== normalizedApiBaseUrl) {
-      originalConfig.__apiRetryPhase = 2;
-      originalConfig.baseURL = normalizedApiFallbackUrl;
-      originalConfig.url = originalUrl.startsWith('/api/') ? originalUrl.replace('/api', '') : originalUrl;
-      return api.request(originalConfig);
-    }
+    originalConfig.__apiRetryIndex = retryIndex + 1;
+    originalConfig.baseURL = apiBaseCandidates[retryIndex + 1];
+    originalConfig.url = originalUrl.startsWith('/api/') ? originalUrl.replace('/api', '') : originalUrl;
+    return api.request(originalConfig);
 
     throw error;
   },

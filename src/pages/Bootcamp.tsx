@@ -18,14 +18,14 @@ const fallbackRoles: RoleData[] = [
   { _id: 'r3', roleName: 'Operations', description: 'Optimize internal processes and efficiency.', responsibilities: ['Workflow Optimization', 'Resource Allocation', 'Performance Tracking'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 3 },
   {
     _id: 'r4', roleName: 'BDE', description: 'Optimize internal processes and efficiency.', responsibilities: ['Lead Generation & Market Research',
-      'Client Relationship Management'
-'Revenue Growth Strategy'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 4
+      'Client Relationship Management',
+      'Revenue Growth Strategy'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 4
   },
   {
     _id: 'r5', roleName: 'Web Development', description: 'Develop Real Time Scalable Web Applications', responsibilities: ['Lead Generation & Market Research',
-      'Client Relationship Management'
+      'Client Relationship Management',
 'Revenue Growth Strategy'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 4
-  }
+  },
 ];
 
 const fallbackMediaSlides: BootcampMediaData[] = [

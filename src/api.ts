@@ -50,6 +50,7 @@ api.interceptors.response.use(
 
     originalConfig.__apiRetry = true;
     originalConfig.url = `/api${originalUrl}`;
+    originalConfig.baseURL = '';
     return api.request(originalConfig);
   },
 );

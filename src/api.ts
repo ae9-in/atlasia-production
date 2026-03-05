@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const configuredApiBaseUrl = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.trim() || '';
+const configuredApiFallbackUrl = (import.meta.env.VITE_API_FALLBACK_URL as string | undefined)?.trim() || 'https://atlansia.vercel.app/api';
 
 function normalizeApiBaseUrl(raw: string): string {
   if (!raw) return '/api';
@@ -26,6 +27,7 @@ function normalizeApiBaseUrl(raw: string): string {
 }
 
 const normalizedApiBaseUrl = normalizeApiBaseUrl(configuredApiBaseUrl);
+const normalizedApiFallbackUrl = normalizeApiBaseUrl(configuredApiFallbackUrl);
 
 const api = axios.create({
   baseURL: normalizedApiBaseUrl,
@@ -37,21 +39,29 @@ api.interceptors.response.use(
     if (!axios.isAxiosError(error) || !error.config) throw error;
 
     const status = error.response?.status;
-    const originalConfig = error.config as typeof error.config & { __apiRetry?: boolean };
+    const originalConfig = error.config as typeof error.config & { __apiRetryPhase?: number };
     const originalUrl = originalConfig.url || '';
-    const canRetry =
-      !originalConfig.__apiRetry &&
-      (status === 404 || status === 405) &&
-      typeof originalUrl === 'string' &&
-      originalUrl.startsWith('/') &&
-      !originalUrl.startsWith('/api/');
+    const isRetriableStatus = status === 404 || status === 405;
+    const phase = originalConfig.__apiRetryPhase || 0;
+    const isRelativeUrl = typeof originalUrl === 'string' && originalUrl.startsWith('/');
 
-    if (!canRetry) throw error;
+    if (!isRetriableStatus || !isRelativeUrl) throw error;
 
-    originalConfig.__apiRetry = true;
-    originalConfig.url = `/api${originalUrl}`;
-    originalConfig.baseURL = '';
-    return api.request(originalConfig);
+    if (phase === 0 && !originalUrl.startsWith('/api/')) {
+      originalConfig.__apiRetryPhase = 1;
+      originalConfig.url = `/api${originalUrl}`;
+      originalConfig.baseURL = '';
+      return api.request(originalConfig);
+    }
+
+    if (phase <= 1 && normalizedApiFallbackUrl !== normalizedApiBaseUrl) {
+      originalConfig.__apiRetryPhase = 2;
+      originalConfig.baseURL = normalizedApiFallbackUrl;
+      originalConfig.url = originalUrl.startsWith('/api/') ? originalUrl.replace('/api', '') : originalUrl;
+      return api.request(originalConfig);
+    }
+
+    throw error;
   },
 );
 

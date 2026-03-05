@@ -5,6 +5,14 @@ import { LoadingScreen, SectionTitle } from '../components/Common';
 import { Link } from 'react-router-dom';
 import { SiteContent, defaultSiteContent, normalizeSiteContent } from '../siteContent';
 
+const aboutDefaults: AboutData = {
+  whoWeAre: "Atlasia is a premier industry immersion bootcamp designed to bridge the gap between academic learning and corporate reality.",
+  whyAtlasia: "We provide real-world exposure, mentorship from industry leaders, and hands-on project experience.",
+  approach: "Our 15-day intensive program focuses on execution, strategy, and professional growth.",
+  vision: "To be a leader in professional immersion training for students",
+  mission: "Empowering the next generation of professionals through direct industry engagement.",
+};
+
 export default function About() {
   const [loading, setLoading] = useState(true);
   const [about, setAbout] = useState<AboutData | null>(null);
@@ -34,11 +42,11 @@ export default function About() {
   if (loading) return <LoadingScreen />;
 
   const sections = [
-    { title: siteContent.aboutPage.sectionTitles[0] || "Who We Are", content: about?.whoWeAre, image: siteContent.aboutPage.sectionImages[0] },
-    { title: siteContent.aboutPage.sectionTitles[1] || "Why ATLASIA", content: about?.whyAtlasia, image: siteContent.aboutPage.sectionImages[1] },
-    { title: siteContent.aboutPage.sectionTitles[2] || "Our Approach", content: about?.approach, image: siteContent.aboutPage.sectionImages[2] },
-    { title: siteContent.aboutPage.sectionTitles[3] || "Our Vision", content: about?.vision, image: siteContent.aboutPage.sectionImages[3] },
-    { title: siteContent.aboutPage.sectionTitles[4] || "Our Mission", content: about?.mission, image: siteContent.aboutPage.sectionImages[4] },
+    { title: siteContent.aboutPage.sectionTitles[0] || "Who We Are", content: about?.whoWeAre || aboutDefaults.whoWeAre, image: siteContent.aboutPage.sectionImages[0] },
+    { title: siteContent.aboutPage.sectionTitles[1] || "Why ATLASIA", content: about?.whyAtlasia || aboutDefaults.whyAtlasia, image: siteContent.aboutPage.sectionImages[1] },
+    { title: siteContent.aboutPage.sectionTitles[2] || "Our Approach", content: about?.approach || aboutDefaults.approach, image: siteContent.aboutPage.sectionImages[2] },
+    { title: siteContent.aboutPage.sectionTitles[3] || "Our Vision", content: about?.vision || aboutDefaults.vision, image: siteContent.aboutPage.sectionImages[3] },
+    { title: siteContent.aboutPage.sectionTitles[4] || "Our Mission", content: about?.mission || aboutDefaults.mission, image: siteContent.aboutPage.sectionImages[4] },
   ];
 
   return (

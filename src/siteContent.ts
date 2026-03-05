@@ -94,7 +94,7 @@ export const defaultSiteContent: SiteContent = {
     ],
   },
   bootcampPage: {
-    heroTitle: "The 15-Day Journey",
+    heroTitle: "The 12-Day Journey",
     heroSubtitle: "A rigorous, high-impact immersion program designed to transform your professional capabilities.",
     testimonialsTitle: "Testimonials",
     testimonialsSubtitle: "Stories from participants who completed the immersion.",
@@ -104,7 +104,7 @@ export const defaultSiteContent: SiteContent = {
     roleBreakdownSubtitle: "Specialized tracks for diverse professional interests.",
     roleRegisterText: "Register Now",
     outcomesTitle: "Program Outcomes",
-    outcomesSubtitle: "What you will achieve by the end of the 15 days.",
+    outcomesSubtitle: "What you will achieve by the end of the 12 days.",
     outcomes: [
       { title: "Corporate Readiness", description: "Master the soft skills and professional etiquette required in top-tier corporate environments." },
       { title: "Strategic Thinking", description: "Develop the ability to analyze complex business problems and propose viable solutions." },
@@ -116,7 +116,7 @@ export const defaultSiteContent: SiteContent = {
     heroTitle: "For the Next Generation",
     heroSubtitle: "Are you ready to bridge the gap between classroom and corporate?",
     heroRegisterText: "Register Now",
-    heroRegisterLink: "https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform",
+    heroRegisterLink: "https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform",
     whyJoinTitle: "Why Join ATLASIA?",
     whyJoinSubtitle: "We empower students with the tools for success.",
     benefits: [
@@ -126,7 +126,7 @@ export const defaultSiteContent: SiteContent = {
     ],
     experienceTitle: "What You Will Experience",
     experienceItems: [
-      "Intensive 15-day corporate immersion",
+      "Intensive 12-day corporate immersion",
       "Direct mentorship from industry veterans",
       "Hands-on project execution",
       "Professional etiquette and soft skills training",
@@ -134,7 +134,7 @@ export const defaultSiteContent: SiteContent = {
     ],
     experienceImageUrl: "https://picsum.photos/seed/students/800/800",
     experienceBadgeText: "100% Immersion",
-    finalRegisterLink: "https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform",
+    finalRegisterLink: "https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform",
     finalRegisterText: "Register Now",
   },
 };

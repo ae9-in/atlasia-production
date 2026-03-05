@@ -10,7 +10,7 @@ import { SiteContent, defaultSiteContent, normalizeSiteContent } from '../siteCo
 const fallbackHero: HeroData = {
   title: 'ATLASIA',
   subtitle: 'THE BOOTCAMP COMPANY',
-  tagline: '15-Day Industry Bootcamp: from classroom to corporate execution.',
+  tagline: '12-Day Industry Bootcamp: from classroom to corporate execution.',
   primaryButtonText: 'Explore Bootcamp',
   primaryButtonLink: '/bootcamp',
   secondaryButtonText: 'Join as Student',
@@ -32,13 +32,13 @@ const fallbackCarousel: CarouselData[] = [
 const fallbackPhases: PhaseData[] = [
   { _id: 'ph1', title: 'Phase 1: Foundations', duration: 'Day 1-3', description: 'Introduction to industry standards and core concepts.', order: 1 },
   { _id: 'ph2', title: 'Phase 2: Deep Dive', duration: 'Day 4-8', description: 'Intensive workshops and real-world case studies.', order: 2 },
-  { _id: 'ph3', title: 'Phase 3: Execution', duration: 'Day 9-15', description: 'Final project delivery and corporate presentation.', order: 3 },
+  { _id: 'ph3', title: 'Phase 3: Execution', duration: 'Day 9-12', description: 'Final project delivery and corporate presentation.', order: 3 },
 ];
 
 const fallbackRoles: RoleData[] = [
-  { _id: 'r1', roleName: 'Business Analyst', description: 'Analyze business needs and document requirements.', responsibilities: ['Requirement Gathering', 'Process Mapping', 'Stakeholder Management'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 1 },
-  { _id: 'r2', roleName: 'Product Manager', description: 'Drive product vision and strategy.', responsibilities: ['Roadmap Planning', 'User Research', 'Agile Leadership'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 2 },
-  { _id: 'r3', roleName: 'Operations Lead', description: 'Optimize internal processes and efficiency.', responsibilities: ['Workflow Optimization', 'Resource Allocation', 'Performance Tracking'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 3 },
+  { _id: 'r1', roleName: 'Business Analyst', description: 'Analyze business needs and document requirements.', responsibilities: ['Requirement Gathering', 'Process Mapping', 'Stakeholder Management'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform', order: 1 },
+  { _id: 'r2', roleName: 'Product Manager', description: 'Drive product vision and strategy.', responsibilities: ['Roadmap Planning', 'User Research', 'Agile Leadership'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform', order: 2 },
+  { _id: 'r3', roleName: 'Operations Lead', description: 'Optimize internal processes and efficiency.', responsibilities: ['Workflow Optimization', 'Resource Allocation', 'Performance Tracking'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform', order: 3 },
 ];
 
 const fallbackCta: CTAData = {
@@ -64,7 +64,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [heroRes, highlightsRes, carouselRes, phasesRes, rolesRes, ctaRes, siteContentRes] = await Promise.all([
+        const results = await Promise.allSettled([
           api.get('/hero'),
           api.get('/highlights'),
           api.get('/carousel'),
@@ -73,13 +73,50 @@ export default function Home() {
           api.get('/cta'),
           api.get('/site-content'),
         ]);
-        setHero(heroRes.data && typeof heroRes.data === 'object' ? heroRes.data : fallbackHero);
-        setHighlights(toArray<HighlightData>(highlightsRes.data, fallbackHighlights));
-        setCarousel(toArray<CarouselData>(carouselRes.data, fallbackCarousel));
-        setPhases(toArray<PhaseData>(phasesRes.data, fallbackPhases).slice(0, 3));
-        setRoles(toArray<RoleData>(rolesRes.data, fallbackRoles));
-        setCta(ctaRes.data && typeof ctaRes.data === 'object' ? ctaRes.data : fallbackCta);
-        setSiteContent(normalizeSiteContent(siteContentRes.data));
+
+        const heroRes = results[0];
+        const highlightsRes = results[1];
+        const carouselRes = results[2];
+        const phasesRes = results[3];
+        const rolesRes = results[4];
+        const ctaRes = results[5];
+        const siteContentRes = results[6];
+
+        setHero(
+          heroRes.status === 'fulfilled' && heroRes.value.data && typeof heroRes.value.data === 'object'
+            ? heroRes.value.data
+            : fallbackHero,
+        );
+        setHighlights(
+          highlightsRes.status === 'fulfilled'
+            ? toArray<HighlightData>(highlightsRes.value.data, fallbackHighlights)
+            : fallbackHighlights,
+        );
+        setCarousel(
+          carouselRes.status === 'fulfilled'
+            ? toArray<CarouselData>(carouselRes.value.data, fallbackCarousel)
+            : fallbackCarousel,
+        );
+        setPhases(
+          phasesRes.status === 'fulfilled'
+            ? toArray<PhaseData>(phasesRes.value.data, fallbackPhases).slice(0, 3)
+            : fallbackPhases,
+        );
+        setRoles(
+          rolesRes.status === 'fulfilled'
+            ? toArray<RoleData>(rolesRes.value.data, fallbackRoles)
+            : fallbackRoles,
+        );
+        setCta(
+          ctaRes.status === 'fulfilled' && ctaRes.value.data && typeof ctaRes.value.data === 'object'
+            ? ctaRes.value.data
+            : fallbackCta,
+        );
+        setSiteContent(
+          siteContentRes.status === 'fulfilled'
+            ? normalizeSiteContent(siteContentRes.value.data)
+            : defaultSiteContent,
+        );
       } catch (err) {
         console.error(err);
         setHero(fallbackHero);

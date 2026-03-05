@@ -130,7 +130,7 @@ export const defaultSiteContent: SiteContent = {
       "Direct mentorship from industry veterans",
       "Hands-on project execution",
       "Professional etiquette and soft skills training",
-      "Final presentation to corporate leaders",
+      "Interview Readiness",
     ],
     experienceImageUrl: "https://picsum.photos/seed/students/800/800",
     experienceBadgeText: "100% Immersion",

@@ -47,6 +47,10 @@ const fallbackCta: CTAData = {
   buttonLink: '/students',
 };
 
+const toArray = <T,>(value: unknown, fallback: T[]): T[] => (
+  Array.isArray(value) ? value as T[] : fallback
+);
+
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [hero, setHero] = useState<HeroData>(fallbackHero);
@@ -69,12 +73,12 @@ export default function Home() {
           api.get('/cta'),
           api.get('/site-content'),
         ]);
-        setHero(heroRes.data);
-        setHighlights(highlightsRes.data);
-        setCarousel(carouselRes.data);
-        setPhases(phasesRes.data.slice(0, 3));
-        setRoles(rolesRes.data);
-        setCta(ctaRes.data);
+        setHero(heroRes.data && typeof heroRes.data === 'object' ? heroRes.data : fallbackHero);
+        setHighlights(toArray<HighlightData>(highlightsRes.data, fallbackHighlights));
+        setCarousel(toArray<CarouselData>(carouselRes.data, fallbackCarousel));
+        setPhases(toArray<PhaseData>(phasesRes.data, fallbackPhases).slice(0, 3));
+        setRoles(toArray<RoleData>(rolesRes.data, fallbackRoles));
+        setCta(ctaRes.data && typeof ctaRes.data === 'object' ? ctaRes.data : fallbackCta);
         setSiteContent(normalizeSiteContent(siteContentRes.data));
       } catch (err) {
         console.error(err);

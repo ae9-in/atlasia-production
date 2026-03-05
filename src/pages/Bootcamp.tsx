@@ -30,6 +30,18 @@ const fallbackCta: CTAData = {
   buttonLink: '/students',
 };
 
+const toArray = <T,>(value: unknown, fallback: T[]): T[] => (
+  Array.isArray(value) ? value as T[] : fallback
+);
+
+const normalizeRoles = (value: unknown): RoleData[] => {
+  const roles = toArray<RoleData>(value, fallbackRoles);
+  return roles.map((role) => ({
+    ...role,
+    responsibilities: Array.isArray(role.responsibilities) ? role.responsibilities : [],
+  }));
+};
+
 export default function Bootcamp() {
   const [loading, setLoading] = useState(true);
   const [phases, setPhases] = useState<PhaseData[]>(fallbackPhases);
@@ -49,10 +61,10 @@ export default function Bootcamp() {
           api.get('/bootcamp-media'),
           api.get('/site-content'),
         ]);
-        setPhases(phasesRes.data);
-        setRoles(rolesRes.data);
-        setCta(ctaRes.data);
-        setMediaSlides(mediaRes.data);
+        setPhases(toArray<PhaseData>(phasesRes.data, fallbackPhases));
+        setRoles(normalizeRoles(rolesRes.data));
+        setCta(ctaRes.data && typeof ctaRes.data === 'object' ? ctaRes.data : fallbackCta);
+        setMediaSlides(toArray<BootcampMediaData>(mediaRes.data, fallbackMediaSlides));
         setSiteContent(normalizeSiteContent(siteContentRes.data));
       } catch (err) {
         console.error(err);

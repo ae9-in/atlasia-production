@@ -1,15 +1,39 @@
 import axios from 'axios';
 
 const configuredApiBaseUrl = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.trim() || '';
-const normalizedApiBaseUrl = configuredApiBaseUrl.replace(/\/+$/, '');
+
+function normalizeApiBaseUrl(raw: string): string {
+  if (!raw) return '/api';
+  const trimmed = raw.replace(/\/+$/, '');
+
+  if (/^https?:\/\//i.test(trimmed)) {
+    try {
+      const parsed = new URL(trimmed);
+      const path = parsed.pathname.replace(/\/+$/, '');
+      if (!path || path === '/') {
+        parsed.pathname = '/api';
+      } else if (!path.endsWith('/api')) {
+        parsed.pathname = `${path}/api`;
+      }
+      return parsed.toString().replace(/\/+$/, '');
+    } catch {
+      // Fall through to generic handling.
+    }
+  }
+
+  if (trimmed === '/api' || trimmed.endsWith('/api')) return trimmed;
+  return `${trimmed}/api`;
+}
+
+const normalizedApiBaseUrl = normalizeApiBaseUrl(configuredApiBaseUrl);
 
 const api = axios.create({
-  baseURL: normalizedApiBaseUrl || '/api',
+  baseURL: normalizedApiBaseUrl,
 });
 
 export default api;
 
-const absoluteApiBase = normalizedApiBaseUrl || '';
+const absoluteApiBase = normalizedApiBaseUrl;
 
 export function resolveAssetUrl(url?: string | null): string {
   if (!url) return '';

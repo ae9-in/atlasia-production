@@ -14,8 +14,18 @@ const fallbackPhases: PhaseData[] = [
 
 const fallbackRoles: RoleData[] = [
   { _id: 'r1', roleName: 'Business Analyst', description: 'Analyze business needs and document requirements.', responsibilities: ['Requirement Gathering', 'Process Mapping', 'Stakeholder Management'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 1 },
-  { _id: 'r2', roleName: 'Product Manager', description: 'Drive product vision and strategy.', responsibilities: ['Roadmap Planning', 'User Research', 'Agile Leadership'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 2 },
-  { _id: 'r3', roleName: 'Operations Lead', description: 'Optimize internal processes and efficiency.', responsibilities: ['Workflow Optimization', 'Resource Allocation', 'Performance Tracking'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 3 },
+  { _id: 'r2', roleName: 'HR', description: 'Drive product vision and strategy.', responsibilities: ['Roadmap Planning', 'User Research', 'Agile Leadership'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 2 },
+  { _id: 'r3', roleName: 'Operations', description: 'Optimize internal processes and efficiency.', responsibilities: ['Workflow Optimization', 'Resource Allocation', 'Performance Tracking'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 3 },
+  {
+    _id: 'r4', roleName: 'BDE', description: 'Optimize internal processes and efficiency.', responsibilities: ['Lead Generation & Market Research',
+      'Client Relationship Management'
+'Revenue Growth Strategy'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 4
+  },
+  {
+    _id: 'r5', roleName: 'Web Development', description: 'Develop Real Time Scalable Web Applications', responsibilities: ['Lead Generation & Market Research',
+      'Client Relationship Management'
+'Revenue Growth Strategy'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 4
+  }
 ];
 
 const fallbackMediaSlides: BootcampMediaData[] = [
@@ -189,11 +199,11 @@ export default function Bootcamp() {
       <section className="py-24 bg-ivory">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle title={siteContent.bootcampPage.timelineTitle} subtitle={siteContent.bootcampPage.timelineSubtitle} />
-          
+
           <div className="relative">
             {/* Vertical Line */}
             <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gold/30 -translate-x-1/2" />
-            
+
             <div className="space-y-16">
               {phases.map((phase, idx) => (
                 <motion.div
@@ -210,11 +220,11 @@ export default function Bootcamp() {
                       <p className="text-taupe leading-relaxed">{phase.description}</p>
                     </div>
                   </div>
-                  
+
                   <div className="relative z-10 w-12 h-12 rounded-full bg-mocha border-4 border-ivory flex items-center justify-center text-gold font-bold">
                     {idx + 1}
                   </div>
-                  
+
                   <div className="flex-1 hidden md:block" />
                 </motion.div>
               ))}
@@ -227,13 +237,13 @@ export default function Bootcamp() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle title={siteContent.bootcampPage.roleBreakdownTitle} subtitle={siteContent.bootcampPage.roleBreakdownSubtitle} />
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {roles.map((role, idx) => (
               <div key={role._id || idx} className="premium-card flex flex-col">
                 <h3 className="text-2xl font-display font-bold mb-4 text-mocha">{role.roleName}</h3>
                 <p className="text-taupe mb-8 flex-grow">{role.description}</p>
-                
+
                 <div className="mb-8">
                   <h4 className="text-sm font-heading uppercase tracking-widest text-gold mb-4">Responsibilities</h4>
                   <ul className="space-y-3">
@@ -245,7 +255,7 @@ export default function Bootcamp() {
                     ))}
                   </ul>
                 </div>
-                
+
                 <a
                   href={role.registerLink}
                   target="_blank"

@@ -31,6 +31,29 @@ const api = axios.create({
   baseURL: normalizedApiBaseUrl,
 });
 
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (!axios.isAxiosError(error) || !error.config) throw error;
+
+    const status = error.response?.status;
+    const originalConfig = error.config as typeof error.config & { __apiRetry?: boolean };
+    const originalUrl = originalConfig.url || '';
+    const canRetry =
+      !originalConfig.__apiRetry &&
+      (status === 404 || status === 405) &&
+      typeof originalUrl === 'string' &&
+      originalUrl.startsWith('/') &&
+      !originalUrl.startsWith('/api/');
+
+    if (!canRetry) throw error;
+
+    originalConfig.__apiRetry = true;
+    originalConfig.url = `/api${originalUrl}`;
+    return api.request(originalConfig);
+  },
+);
+
 export default api;
 
 const absoluteApiBase = normalizedApiBaseUrl;

@@ -16,7 +16,7 @@ const aboutDefaults: AboutData = {
 // Code-level About page image fallbacks.
 // You can use external URLs or local served paths like /uploads/<file-name>.
 const aboutCodeImageUrls: string[] = [
-  "",
+  "/uploads/1772621960511-ca0f63a4-9b35-460a-92d8-8b357c30963f-WhatsAppImage2026-03-04at42501PM1.jpg",
   "https://res.cloudinary.com/dt7hm4udv/image/upload/ChatGPT_Image_Mar_5_2026_10_38_18_PM_htofli.png",
   "https://res.cloudinary.com/dt7hm4udv/image/upload/ChatGPT_Image_Mar_5_2026_10_46_31_PM_wigrkf.png",
   "https://res.cloudinary.com/dt7hm4udv/image/upload/WhatsApp_Image_2026-03-06_at_9.24.49_AM_wu3cfs.jpg",

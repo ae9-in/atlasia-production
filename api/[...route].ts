@@ -28,14 +28,20 @@ const ensureDbConnection = async () => {
   if (!mongoUri || mongoUri === "mongodb+srv://...") return;
   if (mongoose.connection.readyState === 1) return;
   if (!mongoConnectionPromise) {
-    mongoConnectionPromise = mongoose.connect(mongoUri).then((conn) => {
-      lastMongoError = null;
-      return conn;
-    }).catch((err) => {
-      lastMongoError = err instanceof Error ? err.message : String(err);
-      mongoConnectionPromise = null;
-      throw err;
-    });
+    mongoConnectionPromise = mongoose
+      .connect(mongoUri, {
+        serverSelectionTimeoutMS: 1500,
+        connectTimeoutMS: 1500,
+      })
+      .then((conn) => {
+        lastMongoError = null;
+        return conn;
+      })
+      .catch((err) => {
+        lastMongoError = err instanceof Error ? err.message : String(err);
+        mongoConnectionPromise = null;
+        throw err;
+      });
   }
   await mongoConnectionPromise;
 };
@@ -116,14 +122,13 @@ const requireAdmin = (req: express.Request, res: express.Response, next: express
   return next();
 };
 
-app.use(async (_req, _res, next) => {
-  try {
-    await ensureDbConnection();
-  } catch (err) {
+app.use((_req, _res, next) => {
+  // Non-blocking connection attempt so API can still serve fallback data
+  // when MongoDB is unavailable or slow in serverless environments.
+  void ensureDbConnection().catch((err) => {
     console.error("MongoDB connection error:", err);
-  } finally {
-    next();
-  }
+  });
+  next();
 });
 
 app.get("/api/admin/verify", requireAdmin, (_req, res) => {

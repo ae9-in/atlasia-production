@@ -104,9 +104,10 @@ const fallbackTestimonials = [
 ];
 
 const fallbackBootcampMedia = [
-  { _id: "bm1", mediaUrl: "https://picsum.photos/seed/bootcamp-media-1/1200/700", mediaType: "image", title: "Live Industry Workshop", description: "Participants collaborating in a real-time corporate simulation.", order: 1 },
-  { _id: "bm2", mediaUrl: "https://picsum.photos/seed/bootcamp-media-2/1200/700", mediaType: "image", title: "Mentor Session", description: "One-on-one guidance from industry professionals.", order: 2 },
-  { _id: "bm3", mediaUrl: "https://picsum.photos/seed/bootcamp-media-3/1200/700", mediaType: "image", title: "Final Presentation", description: "Delivering strategic solutions to a review panel.", order: 3 },
+  { _id: "bm1", mediaUrl: "/uploads/1772621960511-ca0f63a4-9b35-460a-92d8-8b357c30963f-WhatsAppImage2026-03-04at42501PM1.jpg", mediaType: "image", title: "Bootcamp Media 1", description: "Auto-loaded from uploads folder.", order: 1 },
+  { _id: "bm2", mediaUrl: "/uploads/1772621926796-9a0523a7-823c-4b5b-9f7a-50715da0b0fd-WhatsAppImage2026-03-04at42501PM.jpg", mediaType: "image", title: "Bootcamp Media 2", description: "Auto-loaded from uploads folder.", order: 2 },
+  { _id: "bm3", mediaUrl: "/uploads/1772621907273-f43b9b5a-9059-457b-b2c2-b24f2ab20b0a-WhatsAppImage2026-03-04at42502PM.jpg", mediaType: "image", title: "Bootcamp Media 3", description: "Auto-loaded from uploads folder.", order: 3 },
+  { _id: "bm4", mediaUrl: "/uploads/1772621899573-7dc370ec-66e7-4e5b-8110-c7e2e25690f3-WhatsAppImage2026-03-04at42501PM2.jpg", mediaType: "image", title: "Bootcamp Media 4", description: "Auto-loaded from uploads folder.", order: 4 },
 ];
 
 let fallbackSiteContent: Record<string, unknown> = {};

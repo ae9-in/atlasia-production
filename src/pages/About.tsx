@@ -13,6 +13,16 @@ const aboutDefaults: AboutData = {
   mission: "Empowering the next generation of professionals through direct industry engagement.",
 };
 
+// Code-level About page image fallbacks.
+// You can use external URLs or local served paths like /uploads/<file-name>.
+const aboutCodeImageUrls: string[] = [
+  "",
+  "https://res.cloudinary.com/dt7hm4udv/image/upload/ChatGPT_Image_Mar_5_2026_10_38_18_PM_htofli.png",
+  "https://res.cloudinary.com/dt7hm4udv/image/upload/ChatGPT_Image_Mar_5_2026_10_46_31_PM_wigrkf.png",
+  "https://res.cloudinary.com/dt7hm4udv/image/upload/ChatGPT_Image_Mar_5_2026_10_56_36_PM_ncysc1.png",
+  "",
+];
+
 export default function About() {
   const [loading, setLoading] = useState(true);
   const [about, setAbout] = useState<AboutData | null>(null);
@@ -42,11 +52,11 @@ export default function About() {
   if (loading) return <LoadingScreen />;
 
   const sections = [
-    { title: siteContent.aboutPage.sectionTitles[0] || "Who We Are", content: about?.whoWeAre || aboutDefaults.whoWeAre, image: siteContent.aboutPage.sectionImages[0] },
-    { title: siteContent.aboutPage.sectionTitles[1] || "Why ATLASIA", content: about?.whyAtlasia || aboutDefaults.whyAtlasia, image: siteContent.aboutPage.sectionImages[1] },
-    { title: siteContent.aboutPage.sectionTitles[2] || "Our Approach", content: about?.approach || aboutDefaults.approach, image: siteContent.aboutPage.sectionImages[2] },
-    { title: siteContent.aboutPage.sectionTitles[3] || "Our Vision", content: about?.vision || aboutDefaults.vision, image: siteContent.aboutPage.sectionImages[3] },
-    { title: siteContent.aboutPage.sectionTitles[4] || "Our Mission", content: about?.mission || aboutDefaults.mission, image: siteContent.aboutPage.sectionImages[4] },
+    { title: siteContent.aboutPage.sectionTitles[0] || "Who We Are", content: about?.whoWeAre || aboutDefaults.whoWeAre, image: siteContent.aboutPage.sectionImages[0] || aboutCodeImageUrls[0] },
+    { title: siteContent.aboutPage.sectionTitles[1] || "Why ATLASIA", content: about?.whyAtlasia || aboutDefaults.whyAtlasia, image: siteContent.aboutPage.sectionImages[1] || aboutCodeImageUrls[1] },
+    { title: siteContent.aboutPage.sectionTitles[2] || "Our Approach", content: about?.approach || aboutDefaults.approach, image: siteContent.aboutPage.sectionImages[2] || aboutCodeImageUrls[2] },
+    { title: siteContent.aboutPage.sectionTitles[3] || "Our Vision", content: about?.vision || aboutDefaults.vision, image: siteContent.aboutPage.sectionImages[3] || aboutCodeImageUrls[3] },
+    { title: siteContent.aboutPage.sectionTitles[4] || "Our Mission", content: about?.mission || aboutDefaults.mission, image: siteContent.aboutPage.sectionImages[4] || aboutCodeImageUrls[4] },
   ];
 
   return (

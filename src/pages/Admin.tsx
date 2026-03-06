@@ -401,7 +401,7 @@ export default function Admin() {
 
       <section className="premium-card space-y-4">
         <h2 className="text-2xl font-bold">About Section Images</h2>
-        <p className="text-sm text-taupe">Upload one image per About section. These replace old default placeholders.</p>
+        <p className="text-sm text-taupe">Upload one image per About section or paste an image URL directly. Admin values override code defaults.</p>
         {toArray<string>(readSiteContentObject().aboutPage.sectionTitles).map((title, idx) => {
           const imageUrl = readSiteContentObject().aboutPage.sectionImages[idx] || '';
           return (

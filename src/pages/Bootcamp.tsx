@@ -229,9 +229,12 @@ export default function Bootcamp() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle title={siteContent.bootcampPage.roleBreakdownTitle} subtitle={siteContent.bootcampPage.roleBreakdownSubtitle} />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="flex flex-wrap justify-center gap-8">
             {roles.map((role, idx) => (
-              <div key={role._id || idx} className="premium-card flex flex-col">
+              <div
+                key={role._id || idx}
+                className="premium-card flex flex-col w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.34rem)] max-w-[420px]"
+              >
                 <h3 className="text-2xl font-display font-bold mb-4 text-mocha">{role.roleName}</h3>
                 <p className="text-taupe mb-8 flex-grow">{role.description}</p>
 

@@ -29,9 +29,10 @@ const fallbackRoles: RoleData[] = [
 ];
 
 const fallbackMediaSlides: BootcampMediaData[] = [
-  { _id: 'bm1', mediaUrl: 'https://picsum.photos/seed/bootcamp-media-1/1200/700', mediaType: 'image', title: 'Live Industry Workshop', description: 'Participants collaborating in a real-time corporate simulation.', order: 1 },
-  { _id: 'bm2', mediaUrl: 'https://picsum.photos/seed/bootcamp-media-2/1200/700', mediaType: 'image', title: 'Mentor Session', description: 'One-on-one guidance from industry professionals.', order: 2 },
-  { _id: 'bm3', mediaUrl: 'https://picsum.photos/seed/bootcamp-media-3/1200/700', mediaType: 'image', title: 'Final Presentation', description: 'Delivering strategic solutions to a review panel.', order: 3 },
+  { _id: 'bm1', mediaUrl: 'https://res.cloudinary.com/dt7hm4udv/image/upload/WhatsApp_Image_2026-03-04_at_4.25.01_PM_noctge.jpg', mediaType: 'image', title: 'Bootcamp Testimonial 1', description: 'Participant moment from ATLASIA bootcamp.', order: 1 },
+  { _id: 'bm2', mediaUrl: 'https://res.cloudinary.com/dt7hm4udv/image/upload/WhatsApp_Image_2026-03-04_at_4.25.01_PM_1_h4nt6d.jpg', mediaType: 'image', title: 'Bootcamp Testimonial 2', description: 'Participant moment from ATLASIA bootcamp.', order: 2 },
+  { _id: 'bm3', mediaUrl: 'https://res.cloudinary.com/dt7hm4udv/image/upload/WhatsApp_Image_2026-03-04_at_4.25.01_PM_2_kykdpt.jpg', mediaType: 'image', title: 'Bootcamp Testimonial 3', description: 'Participant moment from ATLASIA bootcamp.', order: 3 },
+  { _id: 'bm4', mediaUrl: 'https://res.cloudinary.com/dt7hm4udv/image/upload/WhatsApp_Image_2026-03-04_at_4.25.02_PM_r0or20.jpg', mediaType: 'image', title: 'Bootcamp Testimonial 4', description: 'Participant moment from ATLASIA bootcamp.', order: 4 },
 ];
 
 const fallbackCta: CTAData = {

@@ -20,6 +20,16 @@ export interface SiteContent {
     rolesTitle: string;
     rolesSubtitle: string;
     roleRegisterText: string;
+    joinCarouselTitle: string;
+    joinCarouselSubtitle: string;
+    joinCarouselSlides: Array<{
+      eyebrow: string;
+      headline: string;
+      body: string;
+      stat: string;
+      ctaText: string;
+      ctaLink: string;
+    }>;
   };
   aboutPage: {
     pageTitle: string;
@@ -80,6 +90,34 @@ export const defaultSiteContent: SiteContent = {
     rolesTitle: "Available Roles",
     rolesSubtitle: "Find the perfect fit for your career aspirations.",
     roleRegisterText: "Register for this role",
+    joinCarouselTitle: "Why Students Choose ATLASIA",
+    joinCarouselSubtitle: "A focused immersion that turns classroom confidence into corporate execution.",
+    joinCarouselSlides: [
+      {
+        eyebrow: "Career Outcome",
+        headline: "Build a portfolio that recruiters can evaluate in minutes",
+        body: "Work on guided real-world tasks and leave with proof of execution, not just attendance.",
+        stat: "3 Live project simulations",
+        ctaText: "See Bootcamp Plan",
+        ctaLink: "/bootcamp",
+      },
+      {
+        eyebrow: "Mentorship Access",
+        headline: "Learn directly from mentors who review your work",
+        body: "Receive structured feedback on communication, strategy, and execution standards used in companies.",
+        stat: "1:1 + group mentor reviews",
+        ctaText: "Explore Roles",
+        ctaLink: "/students",
+      },
+      {
+        eyebrow: "Placement Readiness",
+        headline: "Practice interviews, business communication, and delivery",
+        body: "Train for what hiring teams expect in your first weeks on the job: ownership, clarity, and speed.",
+        stat: "12-day intensive format",
+        ctaText: "Register Now",
+        ctaLink: "/students",
+      },
+    ],
   },
   aboutPage: {
     pageTitle: "About ATLASIA",
@@ -143,7 +181,13 @@ export function normalizeSiteContent(raw: unknown): SiteContent {
   const src = (raw && typeof raw === "object" ? raw : {}) as Partial<SiteContent>;
   return {
     common: { ...defaultSiteContent.common, ...(src.common || {}) },
-    home: { ...defaultSiteContent.home, ...(src.home || {}) },
+    home: {
+      ...defaultSiteContent.home,
+      ...(src.home || {}),
+      joinCarouselSlides: Array.isArray(src.home?.joinCarouselSlides)
+        ? src.home.joinCarouselSlides
+        : defaultSiteContent.home.joinCarouselSlides,
+    },
     aboutPage: {
       ...defaultSiteContent.aboutPage,
       ...(src.aboutPage || {}),

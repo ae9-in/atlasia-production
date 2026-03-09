@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import api, { HeroData, HighlightData, CarouselData, PhaseData, RoleData, CTAData } from '../api';
 import { LoadingScreen, SectionTitle } from '../components/Common';
 import { Carousel } from '../components/Carousel';
-import { ChevronRight, ArrowRight, ExternalLink } from 'lucide-react';
+import { ChevronRight, ArrowRight, ExternalLink, ChevronLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SiteContent, defaultSiteContent, normalizeSiteContent } from '../siteContent';
 
@@ -72,6 +72,7 @@ export default function Home() {
   const [roles, setRoles] = useState<RoleData[]>(fallbackRoles);
   const [cta, setCta] = useState<CTAData>(fallbackCta);
   const [siteContent, setSiteContent] = useState<SiteContent>(defaultSiteContent);
+  const [activeJoinSlide, setActiveJoinSlide] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -144,7 +145,32 @@ export default function Home() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const slides = siteContent.home.joinCarouselSlides || [];
+    if (slides.length <= 1) return;
+    const timer = setInterval(() => {
+      setActiveJoinSlide((prev) => (prev + 1) % slides.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [siteContent.home.joinCarouselSlides]);
+
+  useEffect(() => {
+    const slides = siteContent.home.joinCarouselSlides || [];
+    if (!slides.length) {
+      setActiveJoinSlide(0);
+      return;
+    }
+    if (activeJoinSlide >= slides.length) {
+      setActiveJoinSlide(0);
+    }
+  }, [activeJoinSlide, siteContent.home.joinCarouselSlides]);
+
   if (loading) return <LoadingScreen />;
+
+  const joinSlides = siteContent.home.joinCarouselSlides || [];
+  const finalCtaHeading = cta?.heading?.trim() || fallbackCta.heading;
+  const finalCtaButtonText = cta?.buttonText?.trim() || fallbackCta.buttonText;
+  const finalCtaButtonLink = cta?.buttonLink?.trim() || fallbackCta.buttonLink;
 
   return (
     <div className="overflow-hidden">
@@ -283,6 +309,76 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Join Decision Carousel */}
+      <section className="py-24 bg-ivory">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionTitle title={siteContent.home.joinCarouselTitle} subtitle={siteContent.home.joinCarouselSubtitle} />
+          {joinSlides.length > 0 ? (
+            <div className="relative max-w-5xl mx-auto">
+              <div className="bg-white border border-mocha/10 rounded-[2rem] p-8 md:p-12 shadow-sm">
+                <motion.div
+                  key={activeJoinSlide}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35 }}
+                  className="space-y-6"
+                >
+                  <span className="inline-block text-xs uppercase tracking-[0.3em] text-gold font-heading">
+                    {joinSlides[activeJoinSlide].eyebrow}
+                  </span>
+                  <h3 className="text-3xl md:text-5xl font-display font-bold text-mocha leading-tight">
+                    {joinSlides[activeJoinSlide].headline}
+                  </h3>
+                  <p className="text-lg md:text-xl text-taupe max-w-3xl leading-relaxed">
+                    {joinSlides[activeJoinSlide].body}
+                  </p>
+                  <div className="inline-flex items-center px-4 py-2 rounded-full bg-gold/15 text-mocha font-semibold">
+                    {joinSlides[activeJoinSlide].stat}
+                  </div>
+                  <div>
+                    <Link to={joinSlides[activeJoinSlide].ctaLink || '/students'} className="btn-primary inline-flex items-center">
+                      {joinSlides[activeJoinSlide].ctaText || 'Register Now'}
+                      <ArrowRight className="ml-2" size={18} />
+                    </Link>
+                  </div>
+                </motion.div>
+              </div>
+
+              {joinSlides.length > 1 && (
+                <>
+                  <button
+                    onClick={() => setActiveJoinSlide((prev) => (prev - 1 + joinSlides.length) % joinSlides.length)}
+                    className="absolute left-0 md:-left-16 top-1/2 -translate-y-1/2 p-3 rounded-full bg-mocha text-ivory hover:bg-taupe transition-colors"
+                    aria-label="Previous info slide"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  <button
+                    onClick={() => setActiveJoinSlide((prev) => (prev + 1) % joinSlides.length)}
+                    className="absolute right-0 md:-right-16 top-1/2 -translate-y-1/2 p-3 rounded-full bg-mocha text-ivory hover:bg-taupe transition-colors"
+                    aria-label="Next info slide"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                  <div className="mt-8 flex justify-center gap-2">
+                    {joinSlides.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setActiveJoinSlide(idx)}
+                        className={`h-2 rounded-full transition-all ${idx === activeJoinSlide ? 'w-8 bg-gold' : 'w-2 bg-mocha/30'}`}
+                        aria-label={`Go to info slide ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          ) : (
+            <p className="text-center text-taupe">No join slides configured yet.</p>
+          )}
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="py-24 bg-gold">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -292,10 +388,10 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-6xl font-display font-bold text-mocha mb-8">
-              {cta.heading}
+              {finalCtaHeading}
             </h2>
-            <Link to={cta.buttonLink || '/'} className="btn-primary text-xl px-12 py-4">
-              {cta.buttonText}
+            <Link to={finalCtaButtonLink} className="btn-primary text-xl px-12 py-4 min-w-56 inline-flex justify-center">
+              {finalCtaButtonText}
             </Link>
           </motion.div>
         </div>

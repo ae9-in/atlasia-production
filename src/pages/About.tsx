@@ -51,6 +51,10 @@ export default function About() {
 
   if (loading) return <LoadingScreen />;
 
+  const ctaHeading = cta?.heading?.trim() || "Ready to Transform Your Career?";
+  const ctaButtonText = cta?.buttonText?.trim() || "Register Now";
+  const ctaButtonLink = cta?.buttonLink?.trim() || "/students";
+
   const sections = [
     { title: siteContent.aboutPage.sectionTitles[0] || "Who We Are", content: about?.whoWeAre || aboutDefaults.whoWeAre, image: siteContent.aboutPage.sectionImages[0] || aboutCodeImageUrls[0] },
     { title: siteContent.aboutPage.sectionTitles[1] || "Why ATLASIA", content: about?.whyAtlasia || aboutDefaults.whyAtlasia, image: siteContent.aboutPage.sectionImages[1] || aboutCodeImageUrls[1] },
@@ -105,9 +109,9 @@ export default function About() {
       {/* CTA Section */}
       <section className="py-24 bg-mocha text-ivory">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-8">{cta?.heading}</h2>
-          <Link to={cta?.buttonLink || '/'} className="btn-primary !bg-gold !text-mocha">
-            {cta?.buttonText}
+          <h2 className="text-4xl md:text-5xl font-display font-bold mb-8">{ctaHeading}</h2>
+          <Link to={ctaButtonLink} className="btn-primary !bg-gold !text-mocha min-w-48 justify-center inline-flex">
+            {ctaButtonText}
           </Link>
         </div>
       </section>

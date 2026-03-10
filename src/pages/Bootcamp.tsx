@@ -261,7 +261,7 @@ export default function Bootcamp() {
                 </div>
 
                 <a
-                  href={role.registerLink}
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary w-full text-center flex items-center justify-center"

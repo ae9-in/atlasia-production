@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Bootcamp from './pages/Bootcamp';
 import Students from './pages/Students';
+import StudentPortal from './pages/StudentPortal';
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/bootcamp" element={<Bootcamp />} />
             <Route path="/students" element={<Students />} />
+            <Route path="/student-portal" element={<StudentPortal />} />
           </Routes>
         </main>
         <Footer />

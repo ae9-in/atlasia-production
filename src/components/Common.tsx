@@ -35,8 +35,11 @@ export const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-            <Link to="/students" className="btn-primary text-sm py-2 px-6">
+            <Link to="/students" className="btn-secondary text-sm py-2 px-6">
               Register
+            </Link>
+            <Link to="/student-portal" className="btn-primary text-sm py-2 px-6 ml-4">
+              Student Portal
             </Link>
           </div>
 
@@ -74,13 +77,20 @@ export const Navbar = () => {
                   {link.name}
                 </Link>
               ))}
-              <div className="pt-4">
+              <div className="pt-4 space-y-3">
                 <Link
                   to="/students"
                   onClick={() => setIsOpen(false)}
-                  className="btn-primary block text-center"
+                  className="btn-secondary block text-center"
                 >
                   Register Now
+                </Link>
+                <Link
+                  to="/student-portal"
+                  onClick={() => setIsOpen(false)}
+                  className="btn-primary block text-center"
+                >
+                  Student Portal
                 </Link>
               </div>
             </div>
@@ -110,6 +120,7 @@ export const Footer = () => {
               <li><Link to="/about" className="text-ivory/70 hover:text-ivory transition-colors">About Us</Link></li>
               <li><Link to="/bootcamp" className="text-ivory/70 hover:text-ivory transition-colors">Bootcamp</Link></li>
               <li><Link to="/students" className="text-ivory/70 hover:text-ivory transition-colors">Students</Link></li>
+              <li><Link to="/student-portal" className="text-ivory/70 hover:text-ivory transition-colors">Student Portal</Link></li>
             </ul>
           </div>
 

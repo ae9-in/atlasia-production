@@ -146,6 +146,18 @@ export default function Admin() {
     setStatus('Logged out');
   };
 
+  const resetToDefaults = async () => {
+    const confirmed = window.confirm('Reset all content to defaults? This will overwrite saved content.');
+    if (!confirmed) return;
+    try {
+      await api.post('/admin/reset', {}, adminConfig());
+      await loadAll();
+      setStatus('Content reset to defaults');
+    } catch (err) {
+      setStatus(`Failed to reset content: ${errorMessage(err)}`);
+    }
+  };
+
   const saveSingleton = async (path: string, payload: unknown, label: string) => {
     try {
       await api.put(path, payload, adminConfig());
@@ -338,7 +350,10 @@ export default function Admin() {
             </div>
           )}
         </div>
-        <button className="btn-secondary" onClick={logout}>Logout</button>
+        <div className="flex items-center gap-3">
+          <button className="btn-secondary" onClick={resetToDefaults}>Reset to Defaults</button>
+          <button className="btn-secondary" onClick={logout}>Logout</button>
+        </div>
       </div>
       {status && <div className="p-4 rounded-xl border border-gold/30 bg-gold/10">{status}</div>}
 

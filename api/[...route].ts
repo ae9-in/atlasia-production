@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import dns from "node:dns";
 import { Hero, About, Phase, Role, Highlight, CTA, Carousel, Testimonial, BootcampMedia, SiteContent } from "../src/models.ts";
+import { defaultSiteContent } from "../src/siteContent.ts";
 
 dotenv.config();
 
@@ -49,7 +50,9 @@ const ensureDbConnection = async () => {
 const isDbConnected = () => mongoose.connection.readyState === 1;
 const nextId = (prefix: string) => `${prefix}_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
 
-const fallbackHero = {
+const clone = <T,>(value: T): T => JSON.parse(JSON.stringify(value));
+
+const baseFallbackHero = {
   title: "ATLASIA",
   subtitle: "THE BOOTCAMP COMPANY",
   tagline: "12-Day Industry Bootcamp: INDUSTRY IMMERSION BOOTCAMP - From Classroom to Corporate Execution",
@@ -58,61 +61,70 @@ const fallbackHero = {
   secondaryButtonText: "Join as Student",
   secondaryButtonLink: "/students",
 };
+let fallbackHero = clone(baseFallbackHero);
 
-const fallbackAbout = {
+const baseFallbackAbout = {
   whoWeAre: "Atlasia is a premier industry immersion bootcamp designed to bridge the gap between academic learning and corporate reality.",
   whyAtlasia: "We provide real-world exposure, mentorship from industry leaders, and hands-on project experience.",
   approach: "Our 15-day intensive program focuses on execution, strategy, and professional growth.",
   vision: "To be a leader in professional immersion training for students",
   mission: "Empowering the next generation of professionals through direct industry engagement.",
 };
+let fallbackAbout = clone(baseFallbackAbout);
 
-const fallbackPhases = [
+const baseFallbackPhases = [
   { _id: "ph1", title: "Phase 1: Foundations", duration: "Day 1-2", description: "Introduction to industry standards and core concepts.", order: 1 },
   { _id: "ph2", title: "Phase 2: Deep Dive", duration: "Day 2-3", description: "Intensive workshops and real-world case studies.", order: 2 },
   { _id: "ph3", title: "Phase 3: Execution", duration: "Day 3-12", description: "Final project delivery and corporate presentation.", order: 3 },
 ];
+let fallbackPhases = clone(baseFallbackPhases);
 
-const fallbackRoles = [
+const baseFallbackRoles = [
   { _id: "r1", roleName: "Business Analyst", description: "Analyze business needs and document requirements.", responsibilities: ["Requirement Gathering", "Process Mapping", "Stakeholder Management"], registerLink: "https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform", order: 1 },
   { _id: "r2", roleName: "HR", description: "Drive product vision and strategy.", responsibilities: ["Roadmap Planning", "User Research", "Agile Leadership"], registerLink: "https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform", order: 2 },
   { _id: "r3", roleName: "Operations", description: "Optimize internal processes and efficiency.", responsibilities: ["Workflow Optimization", "Resource Allocation", "Performance Tracking"], registerLink: "https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform", order: 3 },
   { _id: "r4", roleName: "BDE", description: "Optimize internal processes and efficiency.", responsibilities: ["Lead Generation & Market Research", "Client Relationship Management", "Revenue Growth Strategy"], registerLink: "https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform", order: 4 },
   { _id: "r5", roleName: "Web Development", description: "Develop Real Time Scalable Web Applications", responsibilities: ["Lead Generation & Market Research", "Client Relationship Management", "Revenue Growth Strategy"], registerLink: "https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform", order: 5 },
 ];
+let fallbackRoles = clone(baseFallbackRoles);
 
-const fallbackHighlights = [
+const baseFallbackHighlights = [
   { _id: "h1", title: "Industry Mentors", description: "Learn directly from professionals working in top-tier companies.", order: 1 },
   { _id: "h2", title: "Real Projects", description: "Work on actual business problems and deliver tangible solutions.", order: 2 },
   { _id: "h3", title: "Networking", description: "Build lasting connections with peers and industry leaders.", order: 3 },
 ];
+let fallbackHighlights = clone(baseFallbackHighlights);
 
-const fallbackCta = {
+const baseFallbackCta = {
   heading: "Ready to Transform Your Career?",
   buttonText: "Register Now",
   buttonLink: "/students",
 };
+let fallbackCta = clone(baseFallbackCta);
 
-const fallbackCarousel = [
+const baseFallbackCarousel = [
   { _id: "c1", imageUrl: "https://picsum.photos/seed/atlasia1/1200/600", title: "Immersive Learning", description: "Experience the corporate world first-hand." },
   { _id: "c2", imageUrl: "https://picsum.photos/seed/atlasia2/1200/600", title: "Expert Guidance", description: "Mentorship from industry veterans." },
   { _id: "c3", imageUrl: "https://picsum.photos/seed/atlasia3/1200/600", title: "Career Growth", description: "Accelerate your professional journey." },
 ];
+let fallbackCarousel = clone(baseFallbackCarousel);
 
-const fallbackTestimonials = [
+const baseFallbackTestimonials = [
   { _id: "t1", imageUrl: "https://picsum.photos/seed/testi1/300/300", name: "Ananya Sharma", role: "Business Analyst Intern", quote: "ATLASIA gave me practical confidence and a clear path into corporate projects.", order: 1 },
   { _id: "t2", imageUrl: "https://picsum.photos/seed/testi2/300/300", name: "Rahul Menon", role: "Product Operations Trainee", quote: "The 12-day immersion was intense, structured, and exactly what I needed to level up.", order: 2 },
   { _id: "t3", imageUrl: "https://picsum.photos/seed/testi3/300/300", name: "Sneha Iyer", role: "Program Participant", quote: "From day one to final presentation, every module felt relevant to real work.", order: 3 },
 ];
+let fallbackTestimonials = clone(baseFallbackTestimonials);
 
-const fallbackBootcampMedia = [
+const baseFallbackBootcampMedia = [
   { _id: "bm1", mediaUrl: "/uploads/1772621960511-ca0f63a4-9b35-460a-92d8-8b357c30963f-WhatsAppImage2026-03-04at42501PM1.jpg", mediaType: "image", title: "Bootcamp Media 1", description: "Auto-loaded from uploads folder.", order: 1 },
   { _id: "bm2", mediaUrl: "/uploads/1772621926796-9a0523a7-823c-4b5b-9f7a-50715da0b0fd-WhatsAppImage2026-03-04at42501PM.jpg", mediaType: "image", title: "Bootcamp Media 2", description: "Auto-loaded from uploads folder.", order: 2 },
   { _id: "bm3", mediaUrl: "/uploads/1772621907273-f43b9b5a-9059-457b-b2c2-b24f2ab20b0a-WhatsAppImage2026-03-04at42502PM.jpg", mediaType: "image", title: "Bootcamp Media 3", description: "Auto-loaded from uploads folder.", order: 3 },
   { _id: "bm4", mediaUrl: "/uploads/1772621899573-7dc370ec-66e7-4e5b-8110-c7e2e25690f3-WhatsAppImage2026-03-04at42501PM2.jpg", mediaType: "image", title: "Bootcamp Media 4", description: "Auto-loaded from uploads folder.", order: 4 },
 ];
+let fallbackBootcampMedia = clone(baseFallbackBootcampMedia);
 
-let fallbackSiteContent: Record<string, unknown> = {};
+let fallbackSiteContent: Record<string, unknown> = clone(defaultSiteContent);
 
 const app = express();
 app.use(cors());
@@ -144,6 +156,57 @@ app.get("/api/admin/status", requireAdmin, (_req, res) => {
     mongoUriConfigured: Boolean(mongoUri),
     lastMongoError,
   });
+});
+const resetFallbacks = () => {
+  fallbackHero = clone(baseFallbackHero);
+  fallbackAbout = clone(baseFallbackAbout);
+  fallbackCta = clone(baseFallbackCta);
+  fallbackSiteContent = clone(defaultSiteContent);
+  fallbackPhases.splice(0, fallbackPhases.length, ...clone(baseFallbackPhases));
+  fallbackRoles.splice(0, fallbackRoles.length, ...clone(baseFallbackRoles));
+  fallbackHighlights.splice(0, fallbackHighlights.length, ...clone(baseFallbackHighlights));
+  fallbackCarousel.splice(0, fallbackCarousel.length, ...clone(baseFallbackCarousel));
+  fallbackTestimonials.splice(0, fallbackTestimonials.length, ...clone(baseFallbackTestimonials));
+  fallbackBootcampMedia.splice(0, fallbackBootcampMedia.length, ...clone(baseFallbackBootcampMedia));
+};
+
+const stripIds = <T extends { _id?: string }>(items: T[]) =>
+  items.map(({ _id, ...rest }) => rest);
+
+app.post("/api/admin/reset", requireAdmin, async (_req, res) => {
+  try {
+    const dbConnected = isDbConnected();
+    if (dbConnected) {
+      await Promise.all([
+        Hero.deleteMany({}),
+        About.deleteMany({}),
+        CTA.deleteMany({}),
+        SiteContent.deleteMany({}),
+        Phase.deleteMany({}),
+        Role.deleteMany({}),
+        Highlight.deleteMany({}),
+        Carousel.deleteMany({}),
+        Testimonial.deleteMany({}),
+        BootcampMedia.deleteMany({}),
+      ]);
+      await Promise.all([
+        (Hero as any).create(clone(baseFallbackHero)),
+        (About as any).create(clone(baseFallbackAbout)),
+        (CTA as any).create(clone(baseFallbackCta)),
+        (SiteContent as any).create({ data: clone(defaultSiteContent) }),
+        (Phase as any).insertMany(stripIds(clone(baseFallbackPhases))),
+        (Role as any).insertMany(stripIds(clone(baseFallbackRoles))),
+        (Highlight as any).insertMany(stripIds(clone(baseFallbackHighlights))),
+        (Carousel as any).insertMany(stripIds(clone(baseFallbackCarousel))),
+        (Testimonial as any).insertMany(stripIds(clone(baseFallbackTestimonials))),
+        (BootcampMedia as any).insertMany(stripIds(clone(baseFallbackBootcampMedia))),
+      ]);
+    }
+    resetFallbacks();
+    return res.json({ ok: true, dbReset: dbConnected });
+  } catch (err) {
+    return res.status(500).json({ error: (err as Error).message });
+  }
 });
 
 app.use("/api", (req, res, next) => {

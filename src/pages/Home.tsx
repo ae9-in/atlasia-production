@@ -63,6 +63,18 @@ const toArray = <T,>(value: unknown, fallback: T[]): T[] => (
   Array.isArray(value) ? value as T[] : fallback
 );
 
+const mergeHero = (data?: Partial<HeroData> | null): HeroData => ({
+  ...fallbackHero,
+  ...data,
+  title: data?.title?.trim() || fallbackHero.title,
+  subtitle: data?.subtitle?.trim() || fallbackHero.subtitle,
+  tagline: data?.tagline?.trim() || fallbackHero.tagline,
+  primaryButtonText: data?.primaryButtonText?.trim() || fallbackHero.primaryButtonText,
+  primaryButtonLink: data?.primaryButtonLink?.trim() || fallbackHero.primaryButtonLink,
+  secondaryButtonText: data?.secondaryButtonText?.trim() || fallbackHero.secondaryButtonText,
+  secondaryButtonLink: data?.secondaryButtonLink?.trim() || fallbackHero.secondaryButtonLink,
+});
+
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [hero, setHero] = useState<HeroData>(fallbackHero);
@@ -97,7 +109,7 @@ export default function Home() {
 
         setHero(
           heroRes.status === 'fulfilled' && heroRes.value.data && typeof heroRes.value.data === 'object'
-            ? heroRes.value.data
+            ? mergeHero(heroRes.value.data)
             : fallbackHero,
         );
         setHighlights(

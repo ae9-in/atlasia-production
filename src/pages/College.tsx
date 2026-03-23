@@ -70,7 +70,7 @@ export default function College() {
                 </motion.div>
               );
             })}
-          </div>
+          </div>run
         </div>
       </section>
 

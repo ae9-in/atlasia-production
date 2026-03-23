@@ -220,11 +220,46 @@ export const defaultSiteContent: SiteContent = {
 
 export function normalizeSiteContent(raw: unknown): SiteContent {
   const src = (raw && typeof raw === "object" ? raw : {}) as Partial<SiteContent>;
+  const nonEmpty = (value: unknown, fallback: string) => {
+    if (typeof value !== "string") return fallback;
+    const trimmed = value.trim();
+    return trimmed.length ? trimmed : fallback;
+  };
+  const mapStringArray = (value: unknown, fallback: string[]) => (
+    Array.isArray(value)
+      ? value.map((item, idx) => nonEmpty(item, fallback[idx] ?? "")).slice(0, fallback.length)
+      : fallback
+  );
   return {
-    common: { ...defaultSiteContent.common, ...(src.common || {}) },
+    common: {
+      ...defaultSiteContent.common,
+      ...(src.common || {}),
+      brandName: nonEmpty(src.common?.brandName, defaultSiteContent.common.brandName),
+      navRegisterText: nonEmpty(src.common?.navRegisterText, defaultSiteContent.common.navRegisterText),
+      navRegisterLink: nonEmpty(src.common?.navRegisterLink, defaultSiteContent.common.navRegisterLink),
+      navRegisterNowText: nonEmpty(src.common?.navRegisterNowText, defaultSiteContent.common.navRegisterNowText),
+      navRegisterNowLink: nonEmpty(src.common?.navRegisterNowLink, defaultSiteContent.common.navRegisterNowLink),
+      footerDescription: nonEmpty(src.common?.footerDescription, defaultSiteContent.common.footerDescription),
+      footerEmail: nonEmpty(src.common?.footerEmail, defaultSiteContent.common.footerEmail),
+      footerPhone: nonEmpty(src.common?.footerPhone, defaultSiteContent.common.footerPhone),
+      footerPrivacyText: nonEmpty(src.common?.footerPrivacyText, defaultSiteContent.common.footerPrivacyText),
+      footerTermsText: nonEmpty(src.common?.footerTermsText, defaultSiteContent.common.footerTermsText),
+    },
     home: {
       ...defaultSiteContent.home,
       ...(src.home || {}),
+      carouselTitle: nonEmpty(src.home?.carouselTitle, defaultSiteContent.home.carouselTitle),
+      carouselSubtitle: nonEmpty(src.home?.carouselSubtitle, defaultSiteContent.home.carouselSubtitle),
+      highlightsTitle: nonEmpty(src.home?.highlightsTitle, defaultSiteContent.home.highlightsTitle),
+      highlightsSubtitle: nonEmpty(src.home?.highlightsSubtitle, defaultSiteContent.home.highlightsSubtitle),
+      bootcampJourneyTitle: nonEmpty(src.home?.bootcampJourneyTitle, defaultSiteContent.home.bootcampJourneyTitle),
+      bootcampJourneySubtitle: nonEmpty(src.home?.bootcampJourneySubtitle, defaultSiteContent.home.bootcampJourneySubtitle),
+      bootcampTimelineLinkText: nonEmpty(src.home?.bootcampTimelineLinkText, defaultSiteContent.home.bootcampTimelineLinkText),
+      rolesTitle: nonEmpty(src.home?.rolesTitle, defaultSiteContent.home.rolesTitle),
+      rolesSubtitle: nonEmpty(src.home?.rolesSubtitle, defaultSiteContent.home.rolesSubtitle),
+      roleRegisterText: nonEmpty(src.home?.roleRegisterText, defaultSiteContent.home.roleRegisterText),
+      joinCarouselTitle: nonEmpty(src.home?.joinCarouselTitle, defaultSiteContent.home.joinCarouselTitle),
+      joinCarouselSubtitle: nonEmpty(src.home?.joinCarouselSubtitle, defaultSiteContent.home.joinCarouselSubtitle),
       joinCarouselSlides: Array.isArray(src.home?.joinCarouselSlides)
         ? src.home.joinCarouselSlides
         : defaultSiteContent.home.joinCarouselSlides,
@@ -232,23 +267,57 @@ export function normalizeSiteContent(raw: unknown): SiteContent {
     aboutPage: {
       ...defaultSiteContent.aboutPage,
       ...(src.aboutPage || {}),
-      sectionTitles: Array.isArray(src.aboutPage?.sectionTitles) ? src.aboutPage.sectionTitles : defaultSiteContent.aboutPage.sectionTitles,
-      sectionImages: Array.isArray(src.aboutPage?.sectionImages) ? src.aboutPage.sectionImages : defaultSiteContent.aboutPage.sectionImages,
+      pageTitle: nonEmpty(src.aboutPage?.pageTitle, defaultSiteContent.aboutPage.pageTitle),
+      pageSubtitle: nonEmpty(src.aboutPage?.pageSubtitle, defaultSiteContent.aboutPage.pageSubtitle),
+      sectionTitles: mapStringArray(src.aboutPage?.sectionTitles, defaultSiteContent.aboutPage.sectionTitles),
+      sectionImages: mapStringArray(src.aboutPage?.sectionImages, defaultSiteContent.aboutPage.sectionImages),
     },
     bootcampPage: {
       ...defaultSiteContent.bootcampPage,
       ...(src.bootcampPage || {}),
+      heroTitle: nonEmpty(src.bootcampPage?.heroTitle, defaultSiteContent.bootcampPage.heroTitle),
+      heroSubtitle: nonEmpty(src.bootcampPage?.heroSubtitle, defaultSiteContent.bootcampPage.heroSubtitle),
+      testimonialsTitle: nonEmpty(src.bootcampPage?.testimonialsTitle, defaultSiteContent.bootcampPage.testimonialsTitle),
+      testimonialsSubtitle: nonEmpty(src.bootcampPage?.testimonialsSubtitle, defaultSiteContent.bootcampPage.testimonialsSubtitle),
+      timelineTitle: nonEmpty(src.bootcampPage?.timelineTitle, defaultSiteContent.bootcampPage.timelineTitle),
+      timelineSubtitle: nonEmpty(src.bootcampPage?.timelineSubtitle, defaultSiteContent.bootcampPage.timelineSubtitle),
+      roleBreakdownTitle: nonEmpty(src.bootcampPage?.roleBreakdownTitle, defaultSiteContent.bootcampPage.roleBreakdownTitle),
+      roleBreakdownSubtitle: nonEmpty(src.bootcampPage?.roleBreakdownSubtitle, defaultSiteContent.bootcampPage.roleBreakdownSubtitle),
+      roleRegisterText: nonEmpty(src.bootcampPage?.roleRegisterText, defaultSiteContent.bootcampPage.roleRegisterText),
+      outcomesTitle: nonEmpty(src.bootcampPage?.outcomesTitle, defaultSiteContent.bootcampPage.outcomesTitle),
+      outcomesSubtitle: nonEmpty(src.bootcampPage?.outcomesSubtitle, defaultSiteContent.bootcampPage.outcomesSubtitle),
       outcomes: Array.isArray(src.bootcampPage?.outcomes) ? src.bootcampPage.outcomes : defaultSiteContent.bootcampPage.outcomes,
     },
     studentsPage: {
       ...defaultSiteContent.studentsPage,
       ...(src.studentsPage || {}),
+      heroTitle: nonEmpty(src.studentsPage?.heroTitle, defaultSiteContent.studentsPage.heroTitle),
+      heroSubtitle: nonEmpty(src.studentsPage?.heroSubtitle, defaultSiteContent.studentsPage.heroSubtitle),
+      heroRegisterText: nonEmpty(src.studentsPage?.heroRegisterText, defaultSiteContent.studentsPage.heroRegisterText),
+      heroRegisterLink: nonEmpty(src.studentsPage?.heroRegisterLink, defaultSiteContent.studentsPage.heroRegisterLink),
+      whyJoinTitle: nonEmpty(src.studentsPage?.whyJoinTitle, defaultSiteContent.studentsPage.whyJoinTitle),
+      whyJoinSubtitle: nonEmpty(src.studentsPage?.whyJoinSubtitle, defaultSiteContent.studentsPage.whyJoinSubtitle),
+      experienceTitle: nonEmpty(src.studentsPage?.experienceTitle, defaultSiteContent.studentsPage.experienceTitle),
+      experienceImageUrl: nonEmpty(src.studentsPage?.experienceImageUrl, defaultSiteContent.studentsPage.experienceImageUrl),
+      experienceBadgeText: nonEmpty(src.studentsPage?.experienceBadgeText, defaultSiteContent.studentsPage.experienceBadgeText),
+      finalRegisterLink: nonEmpty(src.studentsPage?.finalRegisterLink, defaultSiteContent.studentsPage.finalRegisterLink),
+      finalRegisterText: nonEmpty(src.studentsPage?.finalRegisterText, defaultSiteContent.studentsPage.finalRegisterText),
       benefits: Array.isArray(src.studentsPage?.benefits) ? src.studentsPage.benefits : defaultSiteContent.studentsPage.benefits,
       experienceItems: Array.isArray(src.studentsPage?.experienceItems) ? src.studentsPage.experienceItems : defaultSiteContent.studentsPage.experienceItems,
     },
     collegePage: {
       ...defaultSiteContent.collegePage,
       ...(src.collegePage || {}),
+      heroTitle: nonEmpty(src.collegePage?.heroTitle, defaultSiteContent.collegePage.heroTitle),
+      heroSubtitle: nonEmpty(src.collegePage?.heroSubtitle, defaultSiteContent.collegePage.heroSubtitle),
+      heroRegisterText: nonEmpty(src.collegePage?.heroRegisterText, defaultSiteContent.collegePage.heroRegisterText),
+      heroRegisterLink: nonEmpty(src.collegePage?.heroRegisterLink, defaultSiteContent.collegePage.heroRegisterLink),
+      whyPartnerTitle: nonEmpty(src.collegePage?.whyPartnerTitle, defaultSiteContent.collegePage.whyPartnerTitle),
+      whyPartnerSubtitle: nonEmpty(src.collegePage?.whyPartnerSubtitle, defaultSiteContent.collegePage.whyPartnerSubtitle),
+      processTitle: nonEmpty(src.collegePage?.processTitle, defaultSiteContent.collegePage.processTitle),
+      finalHeading: nonEmpty(src.collegePage?.finalHeading, defaultSiteContent.collegePage.finalHeading),
+      finalRegisterText: nonEmpty(src.collegePage?.finalRegisterText, defaultSiteContent.collegePage.finalRegisterText),
+      finalRegisterLink: nonEmpty(src.collegePage?.finalRegisterLink, defaultSiteContent.collegePage.finalRegisterLink),
       benefits: Array.isArray(src.collegePage?.benefits) ? src.collegePage.benefits : defaultSiteContent.collegePage.benefits,
       processSteps: Array.isArray(src.collegePage?.processSteps) ? src.collegePage.processSteps : defaultSiteContent.collegePage.processSteps,
     },

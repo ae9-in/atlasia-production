@@ -6,6 +6,18 @@ import { Carousel } from '../components/Carousel';
 import { ChevronRight, ArrowRight, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+const mergeHero = (data?: Partial<HeroData> | null): HeroData => ({
+  ...fallbackHero,
+  ...data,
+  title: data?.title?.trim() || fallbackHero.title,
+  subtitle: data?.subtitle?.trim() || fallbackHero.subtitle,
+  tagline: data?.tagline?.trim() || fallbackHero.tagline,
+  primaryButtonText: data?.primaryButtonText?.trim() || fallbackHero.primaryButtonText,
+  primaryButtonLink: data?.primaryButtonLink?.trim() || fallbackHero.primaryButtonLink,
+  secondaryButtonText: data?.secondaryButtonText?.trim() || fallbackHero.secondaryButtonText,
+  secondaryButtonLink: data?.secondaryButtonLink?.trim() || fallbackHero.secondaryButtonLink,
+});
+
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [hero, setHero] = useState<HeroData | null>(null);
@@ -26,12 +38,59 @@ export default function Home() {
           api.get('/roles'),
           api.get('/cta'),
         ]);
+<<<<<<< HEAD
         setHero(heroRes.data);
         setHighlights(highlightsRes.data);
         setCarousel(carouselRes.data);
         setPhases(phasesRes.data.slice(0, 3));
         setRoles(rolesRes.data.slice(0, 3));
         setCta(ctaRes.data);
+=======
+
+        const heroRes = results[0];
+        const highlightsRes = results[1];
+        const carouselRes = results[2];
+        const phasesRes = results[3];
+        const rolesRes = results[4];
+        const ctaRes = results[5];
+        const siteContentRes = results[6];
+
+        setHero(
+          heroRes.status === 'fulfilled' && heroRes.value.data && typeof heroRes.value.data === 'object'
+            ? mergeHero(heroRes.value.data)
+            : fallbackHero,
+        );
+        setHighlights(
+          highlightsRes.status === 'fulfilled'
+            ? toArray<HighlightData>(highlightsRes.value.data, fallbackHighlights)
+            : fallbackHighlights,
+        );
+        setCarousel(
+          carouselRes.status === 'fulfilled'
+            ? toArray<CarouselData>(carouselRes.value.data, fallbackCarousel)
+            : fallbackCarousel,
+        );
+        setPhases(
+          phasesRes.status === 'fulfilled'
+            ? toArray<PhaseData>(phasesRes.value.data, fallbackPhases).slice(0, 3)
+            : fallbackPhases,
+        );
+        setRoles(
+          rolesRes.status === 'fulfilled'
+            ? toArray<RoleData>(rolesRes.value.data, fallbackRoles)
+            : fallbackRoles,
+        );
+        setCta(
+          ctaRes.status === 'fulfilled' && ctaRes.value.data && typeof ctaRes.value.data === 'object'
+            ? ctaRes.value.data
+            : fallbackCta,
+        );
+        setSiteContent(
+          siteContentRes.status === 'fulfilled'
+            ? normalizeSiteContent(siteContentRes.value.data)
+            : defaultSiteContent,
+        );
+>>>>>>> 888cc4b (gg)
       } catch (err) {
         console.error(err);
       } finally {

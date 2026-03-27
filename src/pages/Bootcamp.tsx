@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { CheckCircle2, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import { SiteContent, defaultSiteContent, normalizeSiteContent } from '../siteContent';
 
+const REGISTRATION_FORM_URL = 'https://forms.gle/EpPTgmNdsduXJECM8';
+
 const fallbackPhases: PhaseData[] = [
   { _id: 'ph1', title: 'Phase 1: Foundations', duration: 'Day 1-2', description: 'Introduction to industry standards and core concepts.', order: 1 },
   { _id: 'ph2', title: 'Phase 2: Deep Dive', duration: 'Day 2-3', description: 'Intensive workshops and real-world case studies.', order: 2 },
@@ -13,18 +15,18 @@ const fallbackPhases: PhaseData[] = [
 ];
 
 const fallbackRoles: RoleData[] = [
-  { _id: 'r1', roleName: 'Business Analyst', description: 'Analyze business needs and document requirements.', responsibilities: ['Requirement Gathering', 'Process Mapping', 'Stakeholder Management'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 1 },
-  { _id: 'r2', roleName: 'HR', description: 'Drive product vision and strategy.', responsibilities: ['Roadmap Planning', 'User Research', 'Agile Leadership'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 2 },
-  { _id: 'r3', roleName: 'Operations', description: 'Optimize internal processes and efficiency.', responsibilities: ['Workflow Optimization', 'Resource Allocation', 'Performance Tracking'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 3 },
+  { _id: 'r1', roleName: 'Business Analyst', description: 'Analyze business needs and document requirements.', responsibilities: ['Requirement Gathering', 'Process Mapping', 'Stakeholder Management'], registerLink: 'https://forms.gle/EpPTgmNdsduXJECM8', order: 1 },
+  { _id: 'r2', roleName: 'HR', description: 'Drive product vision and strategy.', responsibilities: ['Roadmap Planning', 'User Research', 'Agile Leadership'], registerLink: 'https://forms.gle/EpPTgmNdsduXJECM8', order: 2 },
+  { _id: 'r3', roleName: 'Operations', description: 'Optimize internal processes and efficiency.', responsibilities: ['Workflow Optimization', 'Resource Allocation', 'Performance Tracking'], registerLink: 'https://forms.gle/EpPTgmNdsduXJECM8', order: 3 },
   {
     _id: 'r4', roleName: 'BDE', description: 'Optimize internal processes and efficiency.', responsibilities: ['Lead Generation & Market Research',
       'Client Relationship Management',
-      'Revenue Growth Strategy'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 4
+      'Revenue Growth Strategy'], registerLink: 'https://forms.gle/EpPTgmNdsduXJECM8', order: 4
   },
   {
     _id: 'r5', roleName: 'Web Development', description: 'Develop Real Time Scalable Web Applications', responsibilities: ['Front-End Development & UI Implementation',
       'Website Performance Optimization',
-      'Debugging, Testing & Feature Development'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform', order: 5
+      'Debugging, Testing & Feature Development'], registerLink: 'https://forms.gle/EpPTgmNdsduXJECM8', order: 5
   },
 ];
 
@@ -38,7 +40,7 @@ const fallbackMediaSlides: BootcampMediaData[] = [
 const fallbackCta: CTAData = {
   heading: 'Ready to Transform Your Career?',
   buttonText: 'Register Now',
-  buttonLink: '/students',
+  buttonLink: REGISTRATION_FORM_URL,
 };
 
 const toArray = <T,>(value: unknown, fallback: T[]): T[] => (
@@ -109,6 +111,9 @@ export default function Bootcamp() {
   }, [mediaSlides.length, activeSlide]);
 
   if (loading) return <LoadingScreen />;
+  const finalCtaLink = cta?.buttonText?.trim().toLowerCase().includes('register')
+    ? REGISTRATION_FORM_URL
+    : (cta.buttonLink || '/');
 
   return (
     <div className="pt-20">
@@ -261,7 +266,7 @@ export default function Bootcamp() {
                 </div>
 
                 <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform"
+                  href={role.registerLink || REGISTRATION_FORM_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary w-full text-center flex items-center justify-center"
@@ -323,9 +328,20 @@ export default function Bootcamp() {
       <section className="py-24 bg-gold">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl md:text-6xl font-display font-bold text-mocha mb-8">{cta.heading}</h2>
-          <Link to={cta.buttonLink || '/'} className="btn-primary text-xl px-12 py-4">
-            {cta.buttonText}
-          </Link>
+          {finalCtaLink.startsWith('http') ? (
+            <a
+              href={finalCtaLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary text-xl px-12 py-4 inline-flex"
+            >
+              {cta.buttonText}
+            </a>
+          ) : (
+            <Link to={finalCtaLink} className="btn-primary text-xl px-12 py-4">
+              {cta.buttonText}
+            </Link>
+          )}
         </div>
       </section>
     </div>

@@ -80,11 +80,11 @@ const baseFallbackPhases = [
 let fallbackPhases = clone(baseFallbackPhases);
 
 const baseFallbackRoles = [
-  { _id: "r1", roleName: "Business Analyst", description: "Analyze business needs and document requirements.", responsibilities: ["Requirement Gathering", "Process Mapping", "Stakeholder Management"], registerLink: "https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform", order: 1 },
-  { _id: "r2", roleName: "HR", description: "Drive product vision and strategy.", responsibilities: ["Roadmap Planning", "User Research", "Agile Leadership"], registerLink: "https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform", order: 2 },
-  { _id: "r3", roleName: "Operations", description: "Optimize internal processes and efficiency.", responsibilities: ["Workflow Optimization", "Resource Allocation", "Performance Tracking"], registerLink: "https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform", order: 3 },
-  { _id: "r4", roleName: "BDE", description: "Optimize internal processes and efficiency.", responsibilities: ["Lead Generation & Market Research", "Client Relationship Management", "Revenue Growth Strategy"], registerLink: "https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform", order: 4 },
-  { _id: "r5", roleName: "Web Development", description: "Develop Real Time Scalable Web Applications", responsibilities: ["Lead Generation & Market Research", "Client Relationship Management", "Revenue Growth Strategy"], registerLink: "https://docs.google.com/forms/d/e/1FAIpQLSdSpFlEDLjvojJoACj1gMSSBU6Zspk5yYafi79CGh-IBQ4uVg/viewform", order: 5 },
+  { _id: "r1", roleName: "Business Analyst", description: "Analyze business needs and document requirements.", responsibilities: ["Requirement Gathering", "Process Mapping", "Stakeholder Management"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 1 },
+  { _id: "r2", roleName: "HR", description: "Drive product vision and strategy.", responsibilities: ["Roadmap Planning", "User Research", "Agile Leadership"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 2 },
+  { _id: "r3", roleName: "Operations", description: "Optimize internal processes and efficiency.", responsibilities: ["Workflow Optimization", "Resource Allocation", "Performance Tracking"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 3 },
+  { _id: "r4", roleName: "BDE", description: "Optimize internal processes and efficiency.", responsibilities: ["Lead Generation & Market Research", "Client Relationship Management", "Revenue Growth Strategy"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 4 },
+  { _id: "r5", roleName: "Web Development", description: "Develop Real Time Scalable Web Applications", responsibilities: ["Lead Generation & Market Research", "Client Relationship Management", "Revenue Growth Strategy"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 5 },
 ];
 let fallbackRoles = clone(baseFallbackRoles);
 
@@ -98,7 +98,7 @@ let fallbackHighlights = clone(baseFallbackHighlights);
 const baseFallbackCta = {
   heading: "Ready to Transform Your Career?",
   buttonText: "Register Now",
-  buttonLink: "/students",
+  buttonLink: "https://forms.gle/EpPTgmNdsduXJECM8",
 };
 let fallbackCta = clone(baseFallbackCta);
 
@@ -124,7 +124,7 @@ const baseFallbackBootcampMedia = [
 ];
 let fallbackBootcampMedia = clone(baseFallbackBootcampMedia);
 
-let fallbackSiteContent: Record<string, unknown> = clone(defaultSiteContent);
+let fallbackSiteContent = clone(defaultSiteContent) as Record<string, any>;
 
 const app = express();
 app.use(cors());
@@ -161,7 +161,7 @@ const resetFallbacks = () => {
   fallbackHero = clone(baseFallbackHero);
   fallbackAbout = clone(baseFallbackAbout);
   fallbackCta = clone(baseFallbackCta);
-  fallbackSiteContent = clone(defaultSiteContent);
+  fallbackSiteContent = clone(defaultSiteContent) as Record<string, any>;
   fallbackPhases.splice(0, fallbackPhases.length, ...clone(baseFallbackPhases));
   fallbackRoles.splice(0, fallbackRoles.length, ...clone(baseFallbackRoles));
   fallbackHighlights.splice(0, fallbackHighlights.length, ...clone(baseFallbackHighlights));

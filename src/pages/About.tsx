@@ -5,6 +5,8 @@ import { LoadingScreen, SectionTitle } from '../components/Common';
 import { Link } from 'react-router-dom';
 import { SiteContent, defaultSiteContent, normalizeSiteContent } from '../siteContent';
 
+const REGISTRATION_FORM_URL = 'https://forms.gle/EpPTgmNdsduXJECM8';
+
 const aboutDefaults: AboutData = {
   whoWeAre: "Atlasia is a premier industry immersion bootcamp designed to bridge the gap between academic learning and corporate reality.",
   whyAtlasia: "We provide real-world exposure, mentorship from industry leaders, and hands-on project experience.",
@@ -53,7 +55,9 @@ export default function About() {
 
   const ctaHeading = cta?.heading?.trim() || "Ready to Transform Your Career?";
   const ctaButtonText = cta?.buttonText?.trim() || "Register Now";
-  const ctaButtonLink = cta?.buttonLink?.trim() || "/students";
+  const ctaButtonLink = ctaButtonText.toLowerCase().includes('register')
+    ? REGISTRATION_FORM_URL
+    : (cta?.buttonLink?.trim() || "/students");
 
   const sections = [
     { title: siteContent.aboutPage.sectionTitles[0] || "Who We Are", content: about?.whoWeAre || aboutDefaults.whoWeAre, image: siteContent.aboutPage.sectionImages[0] || aboutCodeImageUrls[0] },
@@ -110,9 +114,20 @@ export default function About() {
       <section className="py-24 bg-mocha text-ivory">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-8">{ctaHeading}</h2>
-          <Link to={ctaButtonLink} className="btn-primary !bg-gold !text-mocha min-w-48 justify-center inline-flex">
-            {ctaButtonText}
-          </Link>
+          {ctaButtonLink.startsWith('http') ? (
+            <a
+              href={ctaButtonLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary !bg-gold !text-mocha min-w-48 justify-center inline-flex"
+            >
+              {ctaButtonText}
+            </a>
+          ) : (
+            <Link to={ctaButtonLink} className="btn-primary !bg-gold !text-mocha min-w-48 justify-center inline-flex">
+              {ctaButtonText}
+            </Link>
+          )}
         </div>
       </section>
     </div>

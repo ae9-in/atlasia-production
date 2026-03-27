@@ -56,9 +56,9 @@ async function startServer() {
   let fallbackPhases = clone(baseFallbackPhases);
 
   const baseFallbackRoles = [
-    { _id: "r1", roleName: "Business Analyst", description: "Analyze business needs and document requirements.", responsibilities: ["Requirement Gathering", "Process Mapping", "Stakeholder Management"], registerLink: "https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform", order: 1 },
-    { _id: "r2", roleName: "Product Manager", description: "Drive product vision and strategy.", responsibilities: ["Roadmap Planning", "User Research", "Agile Leadership"], registerLink: "https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform", order: 2 },
-    { _id: "r3", roleName: "Operations Lead", description: "Optimize internal processes and efficiency.", responsibilities: ["Workflow Optimization", "Resource Allocation", "Performance Tracking"], registerLink: "https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform", order: 3 }
+    { _id: "r1", roleName: "Business Analyst", description: "Analyze business needs and document requirements.", responsibilities: ["Requirement Gathering", "Process Mapping", "Stakeholder Management"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 1 },
+    { _id: "r2", roleName: "Product Manager", description: "Drive product vision and strategy.", responsibilities: ["Roadmap Planning", "User Research", "Agile Leadership"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 2 },
+    { _id: "r3", roleName: "Operations Lead", description: "Optimize internal processes and efficiency.", responsibilities: ["Workflow Optimization", "Resource Allocation", "Performance Tracking"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 3 }
   ];
   let fallbackRoles = clone(baseFallbackRoles);
 
@@ -72,7 +72,7 @@ async function startServer() {
   const baseFallbackCta = {
     heading: "Ready to Transform Your Career?",
     buttonText: "Register Now",
-    buttonLink: "/students"
+    buttonLink: "https://forms.gle/EpPTgmNdsduXJECM8"
   };
   let fallbackCta = clone(baseFallbackCta);
 
@@ -97,7 +97,7 @@ async function startServer() {
     { _id: "bm4", mediaUrl: "https://res.cloudinary.com/dt7hm4udv/image/upload/WhatsApp_Image_2026-03-04_at_4.25.02_PM_r0or20.jpg", mediaType: "image", title: "Bootcamp Testimonial 4", description: "Participant moment from ATLASIA bootcamp.", order: 4 }
   ];
   let fallbackBootcampMedia = clone(baseFallbackBootcampMedia);
-  let fallbackSiteContent: Record<string, unknown> = clone(defaultSiteContent);
+  let fallbackSiteContent = clone(defaultSiteContent) as Record<string, any>;
 
   const uploadUrl = (fileName: string) => `/uploads/${encodeURIComponent(fileName)}`;
   const imageExtRegex = /\.(jpe?g|png|webp|gif|bmp|avif)$/i;
@@ -180,7 +180,7 @@ async function startServer() {
     fallbackHero = clone(baseFallbackHero);
     fallbackAbout = clone(baseFallbackAbout);
     fallbackCta = clone(baseFallbackCta);
-    fallbackSiteContent = clone(defaultSiteContent);
+    fallbackSiteContent = clone(defaultSiteContent) as Record<string, any>;
     fallbackPhases.splice(0, fallbackPhases.length, ...clone(baseFallbackPhases));
     fallbackRoles.splice(0, fallbackRoles.length, ...clone(baseFallbackRoles));
     fallbackHighlights.splice(0, fallbackHighlights.length, ...clone(baseFallbackHighlights));

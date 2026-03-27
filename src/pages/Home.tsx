@@ -7,6 +7,8 @@ import { ChevronRight, ArrowRight, ExternalLink, ChevronLeft } from 'lucide-reac
 import { Link } from 'react-router-dom';
 import { SiteContent, defaultSiteContent, normalizeSiteContent } from '../siteContent';
 
+const REGISTRATION_FORM_URL = 'https://forms.gle/EpPTgmNdsduXJECM8';
+
 const fallbackHero: HeroData = {
   title: 'ATLASIA',
   subtitle: 'THE BOOTCAMP COMPANY',
@@ -38,25 +40,25 @@ const fallbackPhases: PhaseData[] = [
 ];
 
 const fallbackRoles: RoleData[] = [
-  { _id: 'r1', roleName: 'Business Analyst', description: 'Analyze business needs and document requirements.', responsibilities: ['Requirement Gathering', 'Process Mapping', 'Stakeholder Management'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform', order: 1 },
-  { _id: 'r2', roleName: 'HR', description: 'Drive product vision and strategy.', responsibilities: ['Roadmap Planning', 'User Research', 'Agile Leadership'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform', order: 2 },
-  { _id: 'r3', roleName: 'Operations', description: 'Optimize internal processes and efficiency.', responsibilities: ['Workflow Optimization', 'Resource Allocation', 'Performance Tracking'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform', order: 3 },
+  { _id: 'r1', roleName: 'Business Analyst', description: 'Analyze business needs and document requirements.', responsibilities: ['Requirement Gathering', 'Process Mapping', 'Stakeholder Management'], registerLink: 'https://forms.gle/EpPTgmNdsduXJECM8', order: 1 },
+  { _id: 'r2', roleName: 'HR', description: 'Drive product vision and strategy.', responsibilities: ['Roadmap Planning', 'User Research', 'Agile Leadership'], registerLink: 'https://forms.gle/EpPTgmNdsduXJECM8', order: 2 },
+  { _id: 'r3', roleName: 'Operations', description: 'Optimize internal processes and efficiency.', responsibilities: ['Workflow Optimization', 'Resource Allocation', 'Performance Tracking'], registerLink: 'https://forms.gle/EpPTgmNdsduXJECM8', order: 3 },
   {
     _id: 'r4', roleName: 'BDE', description: 'Optimize internal processes and efficiency.', responsibilities: ['Lead Generation & Market Research',
       'Client Relationship Management',
-      'Revenue Growth Strategy'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform', order: 4
+      'Revenue Growth Strategy'], registerLink: 'https://forms.gle/EpPTgmNdsduXJECM8', order: 4
   },
   {
     _id: 'r5', roleName: 'Web Development', description: 'Develop Real Time Scalable Web Applications', responsibilities: ['Lead Generation & Market Research',
       'Client Relationship Management',
-      'Revenue Growth Strategy'], registerLink: 'https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform', order: 4
+      'Revenue Growth Strategy'], registerLink: 'https://forms.gle/EpPTgmNdsduXJECM8', order: 4
   },
 ];
 
 const fallbackCta: CTAData = {
   heading: 'Ready to Transform Your Career?',
   buttonText: 'Register Now',
-  buttonLink: '/students',
+  buttonLink: 'https://forms.gle/EpPTgmNdsduXJECM8',
 };
 
 const toArray = <T,>(value: unknown, fallback: T[]): T[] => (
@@ -182,7 +184,9 @@ export default function Home() {
   const joinSlides = siteContent.home.joinCarouselSlides || [];
   const finalCtaHeading = cta?.heading?.trim() || fallbackCta.heading;
   const finalCtaButtonText = cta?.buttonText?.trim() || fallbackCta.buttonText;
-  const finalCtaButtonLink = cta?.buttonLink?.trim() || fallbackCta.buttonLink;
+  const finalCtaButtonLink = finalCtaButtonText.toLowerCase().includes('register')
+    ? REGISTRATION_FORM_URL
+    : (cta?.buttonLink?.trim() || fallbackCta.buttonLink);
 
   return (
     <div className="overflow-hidden">
@@ -348,10 +352,22 @@ export default function Home() {
                     {joinSlides[activeJoinSlide].stat}
                   </div>
                   <div>
-                    <Link to={joinSlides[activeJoinSlide].ctaLink || '/students'} className="btn-primary inline-flex items-center">
-                      {joinSlides[activeJoinSlide].ctaText || 'Register Now'}
-                      <ArrowRight className="ml-2" size={18} />
-                    </Link>
+                    {(joinSlides[activeJoinSlide].ctaText || 'Register Now').toLowerCase().includes('register') ? (
+                      <a
+                        href={REGISTRATION_FORM_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-primary inline-flex items-center"
+                      >
+                        {joinSlides[activeJoinSlide].ctaText || 'Register Now'}
+                        <ArrowRight className="ml-2" size={18} />
+                      </a>
+                    ) : (
+                      <Link to={joinSlides[activeJoinSlide].ctaLink || '/students'} className="btn-primary inline-flex items-center">
+                        {joinSlides[activeJoinSlide].ctaText || 'Register Now'}
+                        <ArrowRight className="ml-2" size={18} />
+                      </Link>
+                    )}
                   </div>
                 </motion.div>
               </div>
@@ -402,9 +418,20 @@ export default function Home() {
             <h2 className="text-4xl md:text-6xl font-display font-bold text-mocha mb-8">
               {finalCtaHeading}
             </h2>
-            <Link to={finalCtaButtonLink} className="btn-primary text-xl px-12 py-4 min-w-56 inline-flex justify-center">
-              {finalCtaButtonText}
-            </Link>
+            {finalCtaButtonLink.startsWith('http') ? (
+              <a
+                href={finalCtaButtonLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary text-xl px-12 py-4 min-w-56 inline-flex justify-center"
+              >
+                {finalCtaButtonText}
+              </a>
+            ) : (
+              <Link to={finalCtaButtonLink} className="btn-primary text-xl px-12 py-4 min-w-56 inline-flex justify-center">
+                {finalCtaButtonText}
+              </Link>
+            )}
           </motion.div>
         </div>
       </section>

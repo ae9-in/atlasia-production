@@ -84,13 +84,15 @@ export interface SiteContent {
   };
 }
 
+const REGISTRATION_FORM_URL = "https://forms.gle/EpPTgmNdsduXJECM8";
+
 export const defaultSiteContent: SiteContent = {
   common: {
     brandName: "ATLASIA",
     navRegisterText: "Register",
-    navRegisterLink: "/college",
+    navRegisterLink: REGISTRATION_FORM_URL,
     navRegisterNowText: "Register Now",
-    navRegisterNowLink: "/college",
+    navRegisterNowLink: REGISTRATION_FORM_URL,
     footerDescription: "The Bootcamp Company. Bridging the gap between classroom learning and corporate execution through intensive industry immersion.",
     footerEmail: "careers@atlasia.online",
     footerPhone: "8431119696",
@@ -133,7 +135,7 @@ export const defaultSiteContent: SiteContent = {
         body: "Train for what hiring teams expect in your first weeks on the job: ownership, clarity, and speed.",
         stat: "12-day intensive format",
         ctaText: "Register Now",
-        ctaLink: "/students",
+        ctaLink: REGISTRATION_FORM_URL,
       },
     ],
   },
@@ -172,7 +174,7 @@ export const defaultSiteContent: SiteContent = {
     heroTitle: "For the Next Generation",
     heroSubtitle: "Are you ready to bridge the gap between classroom and corporate?",
     heroRegisterText: "Register Now",
-    heroRegisterLink: "https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform",
+    heroRegisterLink: "https://forms.gle/EpPTgmNdsduXJECM8",
     whyJoinTitle: "Why Join ATLASIA?",
     whyJoinSubtitle: "We empower students with the tools for success.",
     benefits: [
@@ -190,14 +192,14 @@ export const defaultSiteContent: SiteContent = {
     ],
     experienceImageUrl: "/images/students-workshop.png.png",
     experienceBadgeText: "100% Immersion",
-    finalRegisterLink: "https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform",
+    finalRegisterLink: "https://forms.gle/EpPTgmNdsduXJECM8",
     finalRegisterText: "Register Now",
   },
   collegePage: {
     heroTitle: "College Partnership Registration",
     heroSubtitle: "Enable your students to access ATLASIA's intensive industry immersion through a structured campus collaboration.",
     heroRegisterText: "Register Your College",
-    heroRegisterLink: "https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform",
+    heroRegisterLink: "https://forms.gle/NiXe5j9rwMve1wHM7",
     whyPartnerTitle: "Why Partner With ATLASIA",
     whyPartnerSubtitle: "A practical bridge between academic curriculum and corporate execution readiness.",
     benefits: [
@@ -214,7 +216,7 @@ export const defaultSiteContent: SiteContent = {
     ],
     finalHeading: "Bring ATLASIA Immersion to Your Campus",
     finalRegisterText: "Start College Registration",
-    finalRegisterLink: "https://docs.google.com/forms/d/e/1FAIpQLSdddFRbl4A_gALPwJRA82ZklQpV1cvrg6FyCYak6Vm27QQoIw/viewform",
+    finalRegisterLink: "https://forms.gle/NiXe5j9rwMve1wHM7",
   },
 };
 

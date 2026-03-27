@@ -5,6 +5,8 @@ import { Menu, X, Mail, Phone } from 'lucide-react';
 import api from '../api';
 import { SiteContent, defaultSiteContent, normalizeSiteContent } from '../siteContent';
 
+const REGISTRATION_FORM_URL = 'https://forms.gle/EpPTgmNdsduXJECM8';
+
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [siteContent, setSiteContent] = useState<SiteContent>(defaultSiteContent);
@@ -44,9 +46,9 @@ export const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-            <Link to={siteContent.common.navRegisterLink || '/college'} className="btn-primary text-sm py-2 px-6">
+            <a href={siteContent.common.navRegisterLink} target="_blank" rel="noopener noreferrer" className="btn-primary text-sm py-2 px-6">
               {siteContent.common.navRegisterText}
-            </Link>
+            </a>
           </div>
 
           <div className="md:hidden flex items-center">
@@ -82,13 +84,15 @@ export const Navbar = () => {
                 </Link>
               ))}
               <div className="pt-4">
-                <Link
-                  to={siteContent.common.navRegisterNowLink || '/college'}
+                <a
+                  href={siteContent.common.navRegisterNowLink || REGISTRATION_FORM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setIsOpen(false)}
                   className="btn-primary block text-center"
                 >
                   {siteContent.common.navRegisterNowText}
-                </Link>
+                </a>
               </div>
             </div>
           </motion.div>

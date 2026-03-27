@@ -31,18 +31,18 @@ async function startServer() {
   const baseFallbackHero = {
     title: "ATLASIA",
     subtitle: "THE BOOTCAMP COMPANY",
-    tagline: "12-Day Industry Bootcamp: INDUSTRY IMMERSION BOOTCAMP - From Classroom to Corporate Execution",
+    tagline: "12-Day Industry Bootcamp: From Classroom to Corporate Execution.",
     primaryButtonText: "Explore Bootcamp",
     primaryButtonLink: "/bootcamp",
     secondaryButtonText: "Join as Student",
-    secondaryButtonLink: "/students"
+    secondaryButtonLink: "/students",
   };
   let fallbackHero = clone(baseFallbackHero);
 
   const baseFallbackAbout = {
     whoWeAre: "Atlasia is a premier industry immersion bootcamp designed to bridge the gap between academic learning and corporate reality.",
     whyAtlasia: "We provide real-world exposure, mentorship from industry leaders, and hands-on project experience.",
-    approach: "Our 15-day intensive program focuses on execution, strategy, and professional growth.",
+    approach: "Our 12-day intensive program focuses on execution, strategy, and professional growth.",
     vision: "To be a leader in professional immersion training for students",
     mission: "Empowering the next generation of professionals through direct industry engagement."
   };
@@ -57,8 +57,10 @@ async function startServer() {
 
   const baseFallbackRoles = [
     { _id: "r1", roleName: "Business Analyst", description: "Analyze business needs and document requirements.", responsibilities: ["Requirement Gathering", "Process Mapping", "Stakeholder Management"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 1 },
-    { _id: "r2", roleName: "Product Manager", description: "Drive product vision and strategy.", responsibilities: ["Roadmap Planning", "User Research", "Agile Leadership"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 2 },
-    { _id: "r3", roleName: "Operations Lead", description: "Optimize internal processes and efficiency.", responsibilities: ["Workflow Optimization", "Resource Allocation", "Performance Tracking"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 3 }
+    { _id: "r2", roleName: "HR", description: "Drive product vision and strategy.", responsibilities: ["Roadmap Planning", "User Research", "Agile Leadership"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 2 },
+    { _id: "r3", roleName: "Operations", description: "Optimize internal processes and efficiency.", responsibilities: ["Workflow Optimization", "Resource Allocation", "Performance Tracking"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 3 },
+    { _id: "r4", roleName: "BDE", description: "Optimize internal processes and efficiency.", responsibilities: ["Lead Generation & Market Research", "Client Relationship Management", "Revenue Growth Strategy"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 4 },
+    { _id: "r5", roleName: "Web Development", description: "Develop Real Time Scalable Web Applications", responsibilities: ["Lead Generation & Market Research", "Client Relationship Management", "Revenue Growth Strategy"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 5 }
   ];
   let fallbackRoles = clone(baseFallbackRoles);
 
@@ -77,9 +79,10 @@ async function startServer() {
   let fallbackCta = clone(baseFallbackCta);
 
   const baseFallbackCarousel = [
-    { _id: "c1", imageUrl: "https://picsum.photos/seed/atlasia1/1200/600", title: "Immersive Learning", description: "Experience the corporate world first-hand." },
-    { _id: "c2", imageUrl: "https://picsum.photos/seed/atlasia2/1200/600", title: "Expert Guidance", description: "Mentorship from industry veterans." },
-    { _id: "c3", imageUrl: "https://picsum.photos/seed/atlasia3/1200/600", title: "Career Growth", description: "Accelerate your professional journey." }
+    { _id: "c1", imageUrl: "https://res.cloudinary.com/dt7hm4udv/image/upload/WhatsApp_Image_2026-03-04_at_3.17.00_PM_1_ygcjt2.jpg", title: "Immersive Learning", description: "Experience the corporate world first-hand." },
+    { _id: "c2", imageUrl: "https://res.cloudinary.com/dt7hm4udv/image/upload/WhatsApp_Image_2026-03-04_at_3.17.00_PM_vebvsc.jpg", title: "Expert Guidance", description: "Mentorship from industry veterans." },
+    { _id: "c3", imageUrl: "https://res.cloudinary.com/dt7hm4udv/image/upload/WhatsApp_Image_2026-03-04_at_3.16.59_PM_1_hpz3o6.jpg", title: "Career Growth", description: "Accelerate your professional journey." },
+    { _id: "c4", imageUrl: "https://res.cloudinary.com/dt7hm4udv/image/upload/WhatsApp_Image_2026-03-04_at_3.16.58_PM_1_pltkrb.jpg", title: "Career Growth", description: "Accelerate your professional journey." }
   ];
   let fallbackCarousel = clone(baseFallbackCarousel);
 

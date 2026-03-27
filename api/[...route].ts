@@ -55,7 +55,7 @@ const clone = <T,>(value: T): T => JSON.parse(JSON.stringify(value));
 const baseFallbackHero = {
   title: "ATLASIA",
   subtitle: "THE BOOTCAMP COMPANY",
-  tagline: "12-Day Industry Bootcamp: INDUSTRY IMMERSION BOOTCAMP - From Classroom to Corporate Execution",
+  tagline: "12-Day Industry Bootcamp: From Classroom to Corporate Execution.",
   primaryButtonText: "Explore Bootcamp",
   primaryButtonLink: "/bootcamp",
   secondaryButtonText: "Join as Student",
@@ -66,16 +66,16 @@ let fallbackHero = clone(baseFallbackHero);
 const baseFallbackAbout = {
   whoWeAre: "Atlasia is a premier industry immersion bootcamp designed to bridge the gap between academic learning and corporate reality.",
   whyAtlasia: "We provide real-world exposure, mentorship from industry leaders, and hands-on project experience.",
-  approach: "Our 15-day intensive program focuses on execution, strategy, and professional growth.",
+  approach: "Our 12-day intensive program focuses on execution, strategy, and professional growth.",
   vision: "To be a leader in professional immersion training for students",
   mission: "Empowering the next generation of professionals through direct industry engagement.",
 };
 let fallbackAbout = clone(baseFallbackAbout);
 
 const baseFallbackPhases = [
-  { _id: "ph1", title: "Phase 1: Foundations", duration: "Day 1-2", description: "Introduction to industry standards and core concepts.", order: 1 },
-  { _id: "ph2", title: "Phase 2: Deep Dive", duration: "Day 2-3", description: "Intensive workshops and real-world case studies.", order: 2 },
-  { _id: "ph3", title: "Phase 3: Execution", duration: "Day 3-12", description: "Final project delivery and corporate presentation.", order: 3 },
+  { _id: "ph1", title: "Phase 1: Foundations", duration: "Day 1-3", description: "Introduction to industry standards and core concepts.", order: 1 },
+  { _id: "ph2", title: "Phase 2: Deep Dive", duration: "Day 4-8", description: "Intensive workshops and real-world case studies.", order: 2 },
+  { _id: "ph3", title: "Phase 3: Execution", duration: "Day 9-12", description: "Final project delivery and corporate presentation.", order: 3 },
 ];
 let fallbackPhases = clone(baseFallbackPhases);
 
@@ -103,9 +103,10 @@ const baseFallbackCta = {
 let fallbackCta = clone(baseFallbackCta);
 
 const baseFallbackCarousel = [
-  { _id: "c1", imageUrl: "https://picsum.photos/seed/atlasia1/1200/600", title: "Immersive Learning", description: "Experience the corporate world first-hand." },
-  { _id: "c2", imageUrl: "https://picsum.photos/seed/atlasia2/1200/600", title: "Expert Guidance", description: "Mentorship from industry veterans." },
-  { _id: "c3", imageUrl: "https://picsum.photos/seed/atlasia3/1200/600", title: "Career Growth", description: "Accelerate your professional journey." },
+  { _id: "c1", imageUrl: "https://res.cloudinary.com/dt7hm4udv/image/upload/WhatsApp_Image_2026-03-04_at_3.17.00_PM_1_ygcjt2.jpg", title: "Immersive Learning", description: "Experience the corporate world first-hand." },
+  { _id: "c2", imageUrl: "https://res.cloudinary.com/dt7hm4udv/image/upload/WhatsApp_Image_2026-03-04_at_3.17.00_PM_vebvsc.jpg", title: "Expert Guidance", description: "Mentorship from industry veterans." },
+  { _id: "c3", imageUrl: "https://res.cloudinary.com/dt7hm4udv/image/upload/WhatsApp_Image_2026-03-04_at_3.16.59_PM_1_hpz3o6.jpg", title: "Career Growth", description: "Accelerate your professional journey." },
+  { _id: "c4", imageUrl: "https://res.cloudinary.com/dt7hm4udv/image/upload/WhatsApp_Image_2026-03-04_at_3.16.58_PM_1_pltkrb.jpg", title: "Career Growth", description: "Accelerate your professional journey." },
 ];
 let fallbackCarousel = clone(baseFallbackCarousel);
 

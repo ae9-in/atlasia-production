@@ -84,7 +84,7 @@ const baseFallbackRoles = [
   { _id: "r2", roleName: "HR", description: "Drive product vision and strategy.", responsibilities: ["Roadmap Planning", "User Research", "Agile Leadership"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 2 },
   { _id: "r3", roleName: "Operations", description: "Optimize internal processes and efficiency.", responsibilities: ["Workflow Optimization", "Resource Allocation", "Performance Tracking"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 3 },
   { _id: "r4", roleName: "BDE", description: "Optimize internal processes and efficiency.", responsibilities: ["Lead Generation & Market Research", "Client Relationship Management", "Revenue Growth Strategy"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 4 },
-  { _id: "r5", roleName: "Web Development", description: "Develop Real Time Scalable Web Applications", responsibilities: ["Lead Generation & Market Research", "Client Relationship Management", "Revenue Growth Strategy"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 5 },
+  { _id: "r5", roleName: "Web Development", description: "Develop Real Time Scalable Web Applications", responsibilities: ["Application Development", "Real-Time Features Implementation", "Performance Optimization"], registerLink: "https://forms.gle/EpPTgmNdsduXJECM8", order: 5 },
 ];
 let fallbackRoles = clone(baseFallbackRoles);
 

@@ -49,9 +49,9 @@ const fallbackRoles: RoleData[] = [
       'Revenue Growth Strategy'], registerLink: 'https://forms.gle/EpPTgmNdsduXJECM8', order: 4
   },
   {
-    _id: 'r5', roleName: 'Web Development', description: 'Develop Real Time Scalable Web Applications', responsibilities: ['Lead Generation & Market Research',
-      'Client Relationship Management',
-      'Revenue Growth Strategy'], registerLink: 'https://forms.gle/EpPTgmNdsduXJECM8', order: 4
+    _id: 'r5', roleName: 'Web Development', description: 'Develop Real Time Scalable Web Applications', responsibilities: ['Application Development',
+      'Real-Time Features Implementation',
+      'Performance Optimization'], registerLink: 'https://forms.gle/EpPTgmNdsduXJECM8', order: 5
   },
 ];
 
@@ -64,6 +64,43 @@ const fallbackCta: CTAData = {
 const toArray = <T,>(value: unknown, fallback: T[]): T[] => (
   Array.isArray(value) ? value as T[] : fallback
 );
+
+const WEB_DEVELOPMENT_ROLE: RoleData = {
+  _id: 'r5',
+  roleName: 'Web Development',
+  description: 'Develop Real Time Scalable Web Applications',
+  responsibilities: [
+    'Application Development',
+    'Real-Time Features Implementation',
+    'Performance Optimization',
+  ],
+  registerLink: REGISTRATION_FORM_URL,
+  order: 5,
+};
+
+const normalizeRoles = (value: unknown): RoleData[] => {
+  const roles = toArray<RoleData>(value, fallbackRoles);
+  const normalizedRoles = roles.map((role) => {
+    if (role.roleName?.trim().toLowerCase() === 'web development') {
+      return {
+        ...WEB_DEVELOPMENT_ROLE,
+        ...role,
+        responsibilities: WEB_DEVELOPMENT_ROLE.responsibilities,
+      };
+    }
+
+    return {
+      ...role,
+      responsibilities: Array.isArray(role.responsibilities) ? role.responsibilities : [],
+    };
+  });
+
+  if (!normalizedRoles.some((role) => role.roleName?.trim().toLowerCase() === 'web development')) {
+    normalizedRoles.push(WEB_DEVELOPMENT_ROLE);
+  }
+
+  return normalizedRoles.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+};
 
 const mergeHero = (data?: Partial<HeroData> | null): HeroData => ({
   ...fallbackHero,
@@ -131,7 +168,7 @@ export default function Home() {
         );
         setRoles(
           rolesRes.status === 'fulfilled'
-            ? toArray<RoleData>(rolesRes.value.data, fallbackRoles)
+            ? normalizeRoles(rolesRes.value.data)
             : fallbackRoles,
         );
         setCta(
